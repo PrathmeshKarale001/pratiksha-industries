@@ -21,22 +21,22 @@ export const site = {
 
 export const nav = [
   { label: 'Home', href: '/' },
-  { label: 'About', href: '/about' },
-  { label: 'Products', href: '/products' },
+  { label: 'About', href: '/#about' },
+  { label: 'Products', href: '/#products' },
   { label: 'Capability', href: '/#process' },
   { label: 'Projects', href: '/#projects' },
   { label: 'Catalogue', href: '/#catalogue' },
-  { label: 'Contact', href: '/contact' }
+  { label: 'Contact', href: '/#contact' }
 ] as const;
 
 export const footerLinks = [
   { label: 'Home', href: '/' },
-  { label: 'About', href: '/about' },
-  { label: 'Products', href: '/products' },
+  { label: 'About', href: '/#about' },
+  { label: 'Products', href: '/#products' },
   { label: 'Capability', href: '/#process' },
   { label: 'Projects', href: '/#projects' },
   { label: 'Catalogue', href: '/#catalogue' },
   { label: 'Quality Control', href: '/#quality' },
   { label: 'How to Order', href: '/#ordering' },
-  { label: 'Contact', href: '/contact' }
+  { label: 'Contact', href: '/#contact' }
 ] as const;

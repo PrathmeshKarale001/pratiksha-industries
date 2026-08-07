@@ -253,12 +253,12 @@ export default function HomePage() {
           </div>
         </div>
 
-        <div id="range" data-band="range" data-band2="1" style={{ background: "#8AA7AC", padding: "92px 0 96px" }}>
+        <div id="products" data-band="range" data-band2="1" style={{ background: "#8AA7AC", padding: "92px 0 96px" }}>
           <div data-wrap="1" style={{ maxWidth: "1240px", margin: "0 auto", padding: "0 32px" }}>
             <div data-reveal="1" style={{ display: "inline-block", border: "1px solid rgba(255,255,255,0.55)", borderRadius: "999px", padding: "9px 18px", fontSize: "11.5px", fontWeight: "600", letterSpacing: "0.14em", color: "#FFFFFF" }}>PRODUCT RANGE</div>
             <div data-sechead="1" style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "48px", marginTop: "30px" }}>
               <h2 data-reveal="1" data-reveal-delay="80" style={{ margin: "0", fontSize: "clamp(32px, 4.2vw, 60px)", lineHeight: "1.02", fontWeight: "700", letterSpacing: "-0.035em", color: "#FFFFFF" }}>What Pratiksha<br />Industries Manufactures</h2>
-              <a data-reveal="1" data-reveal-delay="180" href="/products" style={{ display: "inline-flex", alignItems: "center", gap: "11px", background: "#F0DE9C", color: "#0A3E48", fontWeight: "600", fontSize: "15px", padding: "20px 30px", borderRadius: "14px", whiteSpace: "nowrap", transition: "transform 260ms cubic-bezier(0.34,1.5,0.64,1), background 260ms" }} data-x="x19">
+              <a data-reveal="1" data-reveal-delay="180" href="#catalogue" style={{ display: "inline-flex", alignItems: "center", gap: "11px", background: "#F0DE9C", color: "#0A3E48", fontWeight: "600", fontSize: "15px", padding: "20px 30px", borderRadius: "14px", whiteSpace: "nowrap", transition: "transform 260ms cubic-bezier(0.34,1.5,0.64,1), background 260ms" }} data-x="x19">
                 <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: "#0A3E48", display: "block" }}></span>
                 Full Catalogue
               </a>
