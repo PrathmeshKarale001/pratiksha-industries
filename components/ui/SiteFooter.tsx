@@ -7,14 +7,14 @@ import { useEnquiryModal } from './EnquiryModalProvider';
 
 const FOOTER_LINKS = [
   { label: 'Home', href: '/' },
-  { label: 'About', href: '/about' },
-  { label: 'Products', href: '/products' },
+  { label: 'About', href: '/#about' },
+  { label: 'Products', href: '/#products' },
   { label: 'Capability', href: '/#process' },
   { label: 'Projects', href: '/#projects' },
   { label: 'Catalogue', href: '/#catalogue' },
   { label: 'Quality Control', href: '/#quality' },
   { label: 'How to Order', href: '/#ordering' },
-  { label: 'Contact', href: '/contact' },
+  { label: 'Contact', href: '/#contact' },
 ];
 
 export function SiteFooter() {
