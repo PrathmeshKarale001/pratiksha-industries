@@ -19,6 +19,8 @@ export async function generateMetadata({
   const product = productBySlug(slug);
   if (!product) return {};
 
+  const imgUrl = product.img.replace(/^assets\//, '/assets/');
+
   return {
     title: `${product.name} — ${CATS[product.cat].name}`,
     description: product.short,
@@ -27,7 +29,13 @@ export async function generateMetadata({
       title: `${product.name} | Pratiksha Industries`,
       description: product.short,
       url: `${site.url}/products/${product.id}`,
-      images: [{ url: product.img.replace(/^assets\//, '/assets/') }]
+      images: [{ url: imgUrl, alt: product.name }]
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${product.name} | Pratiksha Industries`,
+      description: product.short,
+      images: [{ url: imgUrl, alt: product.name }]
     }
   };
 }
