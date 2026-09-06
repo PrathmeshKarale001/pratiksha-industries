@@ -6,6 +6,7 @@
  */
 
 import React, { useRef, useState, useCallback, useEffect } from 'react';
+import Image from 'next/image';
 import Navbar from '@/components/Navbar';
 import SiteFooter from '@/components/SiteFooter';
 import MobileActionBar from '@/components/MobileActionBar';
@@ -26,10 +27,14 @@ import {
   marqueeRaw
 } from '@/content/home';
 
+/* content/*.ts stores image paths without a leading slash; normalize once here
+   (mirrors the same `asset()` helper used in ProductsPage.tsx and product/[slug]/page.tsx). */
+const asset = (p: string) => (p.startsWith('/') ? p : '/' + p);
+
 /* Presentation decorations that lived in the prototype's renderVals(). */
 const marquee = marqueeRaw.map((m, i) => ({
   label: m.label,
-  img: m.img.replace('assets/', '/assets/'),
+  img: asset(m.img),
   bg: i % 2 === 0 ? '#F0DE9C' : '#0A3E48',
   fg: i % 2 === 0 ? '#0A3E48' : '#FFFFFF'
 }));
@@ -48,7 +53,7 @@ export default function HomePage() {
   const heroRef = useRef<HTMLDivElement>(null);
   const { mode, compact } = useNavChrome(heroRef);
 
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(() => !prefersReducedMotion());
   const [open, setOpen] = useState(0);
   const [quote, setQuote] = useState<{ tag: string; title: string; subject?: string } | null>(null);
 
@@ -62,15 +67,13 @@ export default function HomePage() {
   );
   const closeQuote = useCallback(() => setQuote(null), []);
 
-  // Intro curtain — one beat, then out. Skipped entirely under reduced motion.
+  // Intro curtain — one beat, then out. Skipped entirely under reduced motion
+  // (loading starts as false via the lazy initializer above).
   useEffect(() => {
-    if (prefersReducedMotion()) {
-      setLoading(false);
-      return;
-    }
+    if (!loading) return;
     const t = window.setTimeout(() => setLoading(false), 1200);
     return () => window.clearTimeout(t);
-  }, []);
+  }, [loading]);
 
   // Hero image parallax (0.18x scroll distance)
   const heroImgRef = useRef<HTMLImageElement>(null);
@@ -117,7 +120,14 @@ export default function HomePage() {
     color: open === i ? '#F0DE9C' : '#FFFFFF',
     rot: open === i ? '180deg' : '0deg',
     delay: i * 90,
-    toggle: () => setOpen(open === i ? -1 : i)
+    expanded: open === i,
+    toggle: () => setOpen(open === i ? -1 : i),
+    key: (e: React.KeyboardEvent) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        setOpen(open === i ? -1 : i);
+      }
+    }
   }));
 
   const showProjects = true;
@@ -148,11 +158,23 @@ export default function HomePage() {
 
         <div ref={progressRef} data-progress="1" style={{ position: "fixed", top: "0", left: "0", height: "3px", width: "0%", background: "#F0DE9C", zIndex: "150", transition: "width 90ms linear" }}></div>
 
-        <div id="main" data-heropad="1" style={{ padding: "14px" }}>
+        <main id="main">
+        <div data-heropad="1" style={{ padding: "14px" }}>
           <div ref={heroRef} data-hero="1" data-glassref="1" data-hero-open="1" style={{ position: "relative", overflow: "hidden", borderRadius: "22px", background: "#0A3E48", minHeight: "880px", display: "flex", flexDirection: "column", clipPath: "inset(0% 0% 0% 0% round 22px)", animation: "pi-hero-open 1300ms cubic-bezier(0.72,0,0.18,1) 1120ms both", willChange: "clip-path" }}>
 
             <div data-hero-zoom="1" style={{ position: "absolute", inset: "0", overflow: "hidden", animation: "pi-hero-zoom 2400ms cubic-bezier(0.22,1,0.36,1) 1120ms both" }}>
-              <img ref={heroImgRef} data-hero-img="1" src="/assets/hero.png" alt="Cable tray installation" style={{ position: "absolute", top: "-7%", left: "0", width: "100%", height: "114%", objectFit: "cover", willChange: "transform" }} />
+              <Image
+                ref={heroImgRef}
+                data-hero-img="1"
+                src="/assets/hero.png"
+                alt="Cable tray installation"
+                width={1376}
+                height={768}
+                preload
+                sizes="100vw"
+                quality={80}
+                style={{ position: "absolute", top: "-7%", left: "0", width: "100%", height: "114%", objectFit: "cover", willChange: "transform" }}
+              />
             </div>
             <div style={{ position: "absolute", inset: "0", background: "linear-gradient(178deg, rgba(4,30,37,0.74) 0%, rgba(4,30,37,0.34) 36%, rgba(5,34,41,0.6) 68%, rgba(4,26,32,0.92) 100%)" }}></div>
             <div style={{ position: "absolute", left: "50%", top: "140px", width: "1120px", height: "1120px", marginLeft: "-560px", border: "1px dashed rgba(240,222,156,0.16)", borderRadius: "50%", pointerEvents: "none", animation: "pi-spin 70s linear infinite" }}></div>
@@ -235,7 +257,7 @@ export default function HomePage() {
       <React.Fragment key={$index}>
                 <div style={{ background: `${m.bg}`, color: `${m.fg}`, borderRadius: "14px", padding: "24px 34px", fontSize: "19px", fontWeight: "600", letterSpacing: "-0.01em", whiteSpace: "nowrap" }}>{m.label}</div>
                 <div style={{ width: "210px", height: "76px", borderRadius: "14px", overflow: "hidden", flexShrink: "0" }}>
-                  <img src={m.img} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                  <Image src={m.img} alt="" width={210} height={76} quality={72} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                 </div>
               </React.Fragment>
       ))}
@@ -245,7 +267,7 @@ export default function HomePage() {
       <React.Fragment key={$index}>
                 <div style={{ background: `${m.bg}`, color: `${m.fg}`, borderRadius: "14px", padding: "24px 34px", fontSize: "19px", fontWeight: "600", letterSpacing: "-0.01em", whiteSpace: "nowrap" }}>{m.label}</div>
                 <div style={{ width: "210px", height: "76px", borderRadius: "14px", overflow: "hidden", flexShrink: "0" }}>
-                  <img src={m.img} alt="" style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                  <Image src={m.img} alt="" width={210} height={76} quality={72} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
                 </div>
               </React.Fragment>
       ))}
@@ -268,7 +290,16 @@ export default function HomePage() {
               {(solutions ?? []).map((s, $index) => (
       <React.Fragment key={$index}>
                 <div data-reveal="1" data-reveal-delay={s.delay} data-tilt="1" style={{ position: "relative", borderRadius: "18px", overflow: "hidden", minHeight: "400px", background: "#0A3E48", display: "flex", flexDirection: "column", justifyContent: "flex-end", transition: "transform 420ms cubic-bezier(0.22,1,0.36,1), box-shadow 420ms" }} data-x="x20">
-                  <img data-card-img="1" loading="lazy" decoding="async" src={s.img} alt={s.name} style={{ position: "absolute", inset: "0", width: "100%", height: "100%", objectFit: "cover", transition: "transform 900ms cubic-bezier(0.22,1,0.36,1)" }} />
+                  <Image
+                    data-card-img="1"
+                    src={asset(s.img)}
+                    alt={s.name}
+                    fill
+                    loading="lazy"
+                    sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 25vw"
+                    quality={78}
+                    style={{ objectFit: "cover", transition: "transform 900ms cubic-bezier(0.22,1,0.36,1)" }}
+                  />
                   <div style={{ position: "absolute", inset: "0", background: "linear-gradient(180deg, rgba(10,62,72,0.1) 25%, rgba(10,62,72,0.9) 100%)", pointerEvents: "none" }}></div>
                   <div style={{ position: "relative", display: "flex", flexDirection: "column", gap: "14px", padding: "26px", paddingTop: "100px" }}>
                     <div style={{ fontSize: "15px", fontWeight: "600", color: "rgba(255,255,255,0.85)" }}>{s.no}</div>
@@ -296,7 +327,16 @@ export default function HomePage() {
 
         <div id="process" style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(min(100%, 440px), 1fr))", alignItems: "stretch" }}>
           <div style={{ position: "relative", background: "#0A3E48", minHeight: "620px", overflow: "hidden" }}>
-            <img data-hero-img="1" src="/assets/process.png" alt="Press brake fabrication" style={{ position: "absolute", top: "-6%", left: "0", width: "100%", height: "112%", objectFit: "cover" }} />
+            <Image
+              data-hero-img="1"
+              src="/assets/process.png"
+              alt="Press brake fabrication"
+              width={896}
+              height={1200}
+              sizes="(max-width: 900px) 100vw, 50vw"
+              quality={80}
+              style={{ position: "absolute", top: "-6%", left: "0", width: "100%", height: "112%", objectFit: "cover" }}
+            />
             <div style={{ position: "absolute", inset: "0", background: "linear-gradient(90deg, rgba(10,62,72,0.5), rgba(10,62,72,0.05))" }}></div>
           </div>
           <div style={{ position: "relative", background: "#0E6B7C", display: "flex", alignItems: "center", padding: "clamp(48px, 5vw, 76px) clamp(28px, 4vw, 60px)", overflow: "hidden" }}>
@@ -308,7 +348,7 @@ export default function HomePage() {
                 {(accordion ?? []).map((a, $index) => (
       <React.Fragment key={$index}>
                   <div data-reveal="1" data-reveal-delay={a.delay} style={{ borderBottom: "1px solid rgba(255,255,255,0.28)", padding: "22px 0" }}>
-                    <div onClick={a.toggle} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "24px", cursor: "pointer" }}>
+                    <div role="button" tabIndex={0} aria-expanded={a.expanded} aria-label={`${a.name} — ${a.expanded ? 'collapse' : 'expand'} details`} onClick={a.toggle} onKeyDown={a.key} style={{ display: "flex", alignItems: "center", justifyContent: "space-between", gap: "24px", cursor: "pointer" }}>
                       <h3 style={{ margin: "0", fontSize: "27px", fontWeight: "700", letterSpacing: "-0.025em", color: `${a.color}`, transition: "color 300ms" }}>{a.name}</h3>
                       <span style={{ width: "38px", height: "38px", borderRadius: "50%", border: "1px solid rgba(255,255,255,0.4)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: "17px", color: `${a.color}`, flexShrink: "0", transform: `rotate(${a.rot})`, transition: "transform 420ms cubic-bezier(0.34,1.4,0.64,1), color 300ms" }}>&#8595;</span>
                     </div>
@@ -338,7 +378,16 @@ export default function HomePage() {
       <React.Fragment key={$index}>
                   <div data-reveal="1" data-reveal-delay={p.delay} data-tilt="1" style={{ transition: "transform 420ms cubic-bezier(0.22,1,0.36,1)" }}>
                     <div style={{ position: "relative", borderRadius: "14px", overflow: "hidden", aspectRatio: "1.28", background: "#0A3E48" }}>
-                      <img data-card-img="1" loading="lazy" decoding="async" src={p.img} alt={p.name} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 900ms cubic-bezier(0.22,1,0.36,1)" }} />
+                      <Image
+                        data-card-img="1"
+                        src={asset(p.img)}
+                        alt={p.name}
+                        fill
+                        loading="lazy"
+                        sizes="(max-width: 700px) 100vw, (max-width: 1100px) 50vw, 33vw"
+                        quality={78}
+                        style={{ objectFit: "cover", transition: "transform 900ms cubic-bezier(0.22,1,0.36,1)" }}
+                      />
                     </div>
                     <div style={{ display: "flex", gap: "8px", marginTop: "18px" }}>
                       <span style={{ background: "#F0DE9C", color: "#0A3E48", fontSize: "10.5px", fontWeight: "600", letterSpacing: "0.1em", padding: "6px 11px", borderRadius: "6px" }}>{p.tagA}</span>
@@ -507,6 +556,8 @@ export default function HomePage() {
             </div>
           </div>
         </div>
+
+      </main>
 
       <div id="contact">
         <SiteFooter onQuote={openQuote} />

@@ -11,11 +11,10 @@ import { useReveal } from '@/lib/hooks';
 
 interface ClientProps {
   p: Product;
-  categoryName: string;
   categoryShort: string;
 }
 
-export default function ProductDetailClient({ p, categoryName, categoryShort }: ClientProps) {
+export default function ProductDetailClient({ p, categoryShort }: ClientProps) {
   useReveal();
 
   const [quote, setQuote] = useState<{ tag: string; title: string; subject?: string } | null>(null);

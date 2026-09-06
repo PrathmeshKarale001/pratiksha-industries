@@ -1,36 +1,80 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Pratiksha Industries — Website
+
+Production website for **Pratiksha Industries**, an ISO 9001:2015 certified manufacturer of cable tray systems, tray fittings, earthing products and instrumentation manifolds at Khed Shivapur, Pune.
+
+## Tech Stack
+
+| Layer | Technology |
+|---|---|
+| Framework | Next.js 16 (App Router, Turbopack) |
+| Language | TypeScript 5 |
+| Styling | Tailwind CSS 4 + inline style objects |
+| Animations | Framer Motion 13 + custom scroll reveals |
+| Forms | React Hook Form 7 + Zod 4 validation |
+| Email | Resend API |
+| Analytics | Vercel Analytics (cookieless) |
+| Hosting | Vercel |
 
 ## Getting Started
 
-First, run the development server:
-
 ```bash
+# Install dependencies
+npm install
+
+# Copy environment variables
+cp .env.example .env.local
+
+# Start the dev server
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000) to view the site.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+See [`.env.example`](.env.example) for all available configuration. Key variables:
 
-## Learn More
+| Variable | Required | Description |
+|---|---|---|
+| `NEXT_PUBLIC_SITE_URL` | Yes | Production domain for canonical URLs and OG metadata |
+| `RESEND_API_KEY` | Production | Resend API key for enquiry form emails |
+| `ENQUIRY_FROM_EMAIL` | No | Sender address (has fallback) |
+| `ENQUIRY_TO_EMAIL` | No | Recipient address (has fallback) |
+| `SITE_PREVIEW_LOCK` | No | Set `true` to restrict to homepage only |
 
-To learn more about Next.js, take a look at the following resources:
+## Project Structure
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+app/                  # Next.js App Router pages
+  actions/            # Server actions (enquiry form)
+  api/                # API routes
+  products/[slug]/    # Dynamic product detail pages
+components/
+  pages/              # Full page components
+  ui/                 # Reusable UI components
+content/              # Static content data (products, site config, etc.)
+lib/                  # Utilities, hooks, schemas
+public/
+  assets/ → images/   # Symlink — all images served from /assets/
+  pdfs/               # Downloadable catalogues and certificates
+types/                # Shared TypeScript types
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Pages
 
-## Deploy on Vercel
+- `/` — Homepage with hero, product overview, capabilities, quality control, projects, catalogue and contact
+- `/about` — Company history, founder's note, machinery, principles and credentials
+- `/products` — Full product index with family filtering
+- `/products/[slug]` — Individual product detail (20 items, statically generated)
+- `/contact` — Contact information with enquiry form
+- `/privacy` — Privacy policy
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Production Build
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run build
+```
+
+## License
+
+All rights reserved © Pratiksha Industries.

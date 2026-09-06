@@ -9,6 +9,7 @@
  */
 
 import React, { useRef, useState, useCallback, useEffect } from 'react';
+import Link from 'next/link';
 import Navbar from '@/components/Navbar';
 import SiteFooter from '@/components/SiteFooter';
 import MobileActionBar from '@/components/MobileActionBar';
@@ -119,7 +120,7 @@ export default function AboutPage() {
           </div>
 
           <div data-reveal="1" data-reveal-delay="120" style={{ position: "relative", marginTop: "54px", borderRadius: "20px", overflow: "hidden", height: "clamp(280px, 34vw, 460px)", background: "#0A3E48" }}>
-            <img data-par="1" src="assets/process.png" alt="Fabrication floor at Khed Shivapur" style={{ position: "absolute", top: "-8%", left: "0", width: "100%", height: "116%", objectFit: "cover", willChange: "transform" }} />
+            <img data-par="1" src="/assets/process.png" alt="Fabrication floor at Khed Shivapur" style={{ position: "absolute", top: "-8%", left: "0", width: "100%", height: "116%", objectFit: "cover", willChange: "transform" }} />
             <div style={{ position: "absolute", inset: "0", background: "linear-gradient(90deg, rgba(4,30,37,0.72), rgba(4,30,37,0.08) 62%)" }}></div>
             <div style={{ position: "absolute", left: "34px", bottom: "30px", right: "34px", display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "24px", flexWrap: "wrap" }}>
               <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "12px", letterSpacing: "0.12em", color: "rgba(255,255,255,0.82)" }}>SHED NO. 01, KHEDEKAR INDUSTRIAL ESTATE / KHED SHIVAPUR, PUNE</div>
@@ -149,7 +150,7 @@ export default function AboutPage() {
             </div>
 
             <div>
-              <div data-reveal="1" style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "11.5px", letterSpacing: "0.16em", color: "#8A6A1F" }}>FOUNDER'S NOTE</div>
+              <div data-reveal="1" style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "11.5px", letterSpacing: "0.16em", color: "#8A6A1F" }}>FOUNDER&apos;S NOTE</div>
               <blockquote data-reveal="1" data-reveal-delay="80" style={{ margin: "24px 0 0", fontSize: "clamp(24px, 2.7vw, 38px)", lineHeight: "1.24", fontWeight: "600", letterSpacing: "-0.03em", color: "#16211F" }}>&ldquo;We started with one press and a promise on delivery dates. The machines multiplied. The promise did not change.&rdquo;</blockquote>
               <div style={{ display: "flex", flexDirection: "column", gap: "18px", marginTop: "30px", maxWidth: "660px" }}>
                 {(note ?? []).map((n, $index) => (
@@ -268,7 +269,7 @@ export default function AboutPage() {
             </div>
 
             <div data-reveal="1" data-reveal-delay="100" style={{ position: "relative", borderRadius: "22px", overflow: "hidden", background: "#0A3E48", minHeight: "420px" }}>
-              <img data-par="1" src="assets/factory-dusk.png" alt="Pratiksha Industries facility" style={{ position: "absolute", top: "-8%", left: "0", width: "100%", height: "116%", objectFit: "cover", willChange: "transform" }} />
+              <img data-par="1" src="/assets/factory-dusk.png" alt="Pratiksha Industries facility" style={{ position: "absolute", top: "-8%", left: "0", width: "100%", height: "116%", objectFit: "cover", willChange: "transform" }} />
               <div style={{ position: "absolute", inset: "0", background: "linear-gradient(180deg, rgba(4,30,37,0.28), rgba(4,30,37,0.9))" }}></div>
               <div style={{ position: "relative", height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-end", gap: "18px", padding: "40px 40px 36px" }}>
                 <div style={{ fontSize: "clamp(26px, 2.8vw, 38px)", lineHeight: "1.06", fontWeight: "700", letterSpacing: "-0.035em", color: "#FFFFFF" }}>Come and see the floor</div>
@@ -286,8 +287,8 @@ export default function AboutPage() {
           <div data-reveal="1" style={{ background: "#0A3E48", borderRadius: "22px", padding: "clamp(40px, 5vw, 68px)", display: "flex", alignItems: "center", justifyContent: "space-between", gap: "40px", flexWrap: "wrap" }}>
             <h2 style={{ margin: "0", maxWidth: "18em", fontSize: "clamp(28px, 3.6vw, 50px)", lineHeight: "1.04", fontWeight: "700", letterSpacing: "-0.04em", color: "#FFFFFF" }}>Ready to spec your run?<br /><span style={{ color: "#F0DE9C" }}>Start with the product index.</span></h2>
             <div style={{ display: "flex", gap: "12px", flexWrap: "wrap" }}>
-              <a href="/products" style={{ background: "#F0DE9C", color: "#0A3E48", fontWeight: "700", fontSize: "15px", padding: "20px 30px", borderRadius: "14px", transition: "background 260ms, transform 260ms cubic-bezier(0.34,1.5,0.64,1)" }} data-x="x23">Browse products &#8594;</a>
-              <a href="/" style={{ border: "1px solid rgba(255,255,255,0.32)", color: "#FFFFFF", fontWeight: "600", fontSize: "15px", padding: "20px 30px", borderRadius: "14px", transition: "border-color 260ms, color 260ms, transform 260ms cubic-bezier(0.34,1.5,0.64,1)" }} data-x="x24">Back to home</a>
+              <Link href="/products" style={{ background: "#F0DE9C", color: "#0A3E48", fontWeight: "700", fontSize: "15px", padding: "20px 30px", borderRadius: "14px", transition: "background 260ms, transform 260ms cubic-bezier(0.34,1.5,0.64,1)" }} data-x="x23">Browse products &#8594;</Link>
+              <Link href="/" style={{ border: "1px solid rgba(255,255,255,0.32)", color: "#FFFFFF", fontWeight: "600", fontSize: "15px", padding: "20px 30px", borderRadius: "14px", transition: "border-color 260ms, color 260ms, transform 260ms cubic-bezier(0.34,1.5,0.64,1)" }} data-x="x24">Back to home</Link>
             </div>
           </div>
         </div>

@@ -1,7 +1,20 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-export function middleware(request: NextRequest) {
+// Temporary client-preview gate. While SITE_PREVIEW_LOCK="true" is set (in
+// Vercel project env vars, not committed here), every route except the
+// homepage 307s back to "/" so only the single-page experience is visible.
+// Unset (or any other value) and the full multi-page site — /about,
+// /products, /products/[slug], /contact, /privacy — is reachable normally.
+// Remove this file entirely once the preview period is over; until then,
+// flip the env var rather than editing this logic.
+const PREVIEW_LOCKED = process.env.SITE_PREVIEW_LOCK === 'true';
+
+export function proxy(request: NextRequest) {
+  if (!PREVIEW_LOCKED) {
+    return NextResponse.next();
+  }
+
   const { pathname } = request.nextUrl;
 
   // Allow home page, Next.js internal files, static assets, images, pdfs, robots, sitemap, api
