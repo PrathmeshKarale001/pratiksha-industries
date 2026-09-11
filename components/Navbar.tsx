@@ -221,6 +221,7 @@ export default function Navbar({ mode, compact, onQuote }: Props) {
             aria-controls="primary-menu"
             style={{
               fontFamily: 'inherit',
+              display: 'inline-flex',
               marginLeft: 'auto',
               alignItems: 'center',
               justifyContent: 'center',
