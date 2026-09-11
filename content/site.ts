@@ -25,6 +25,7 @@ export const nav = [
   { label: 'Products', href: '/products' },
   { label: 'Capability', href: '/#process' },
   { label: 'Projects', href: '/#projects' },
+  { label: 'Clients', href: '/#clients' },
   { label: 'Catalogue', href: '/#catalogue' },
   { label: 'Contact', href: '/contact' }
 ] as const;
@@ -35,6 +36,7 @@ export const footerLinks = [
   { label: 'Products', href: '/products' },
   { label: 'Capability', href: '/#process' },
   { label: 'Projects', href: '/#projects' },
+  { label: 'Clients', href: '/#clients' },
   { label: 'Catalogue', href: '/#catalogue' },
   { label: 'Quality Control', href: '/#quality' },
   { label: 'How to Order', href: '/#ordering' },

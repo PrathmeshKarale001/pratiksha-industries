@@ -11,6 +11,9 @@ import Navbar from '@/components/Navbar';
 import SiteFooter from '@/components/SiteFooter';
 import MobileActionBar from '@/components/MobileActionBar';
 import EnquiryModal from '@/components/EnquiryModal';
+import QuickTrustBar from '@/components/clients/QuickTrustBar';
+import ClientShowcaseSection from '@/components/clients/ClientShowcaseSection';
+import ClientDirectoryModal from '@/components/clients/ClientDirectoryModal';
 import { useReveal, useNavChrome, prefersReducedMotion } from '@/lib/hooks';
 import {
   stats,
@@ -56,6 +59,7 @@ export default function HomePage() {
   const [loading, setLoading] = useState(() => !prefersReducedMotion());
   const [open, setOpen] = useState(0);
   const [quote, setQuote] = useState<{ tag: string; title: string; subject?: string } | null>(null);
+  const [directoryOpen, setDirectoryOpen] = useState(false);
 
   const openQuote = useCallback(
     () => setQuote({ tag: 'SEND AN ENQUIRY', title: 'Request a quotation' }),
@@ -66,6 +70,9 @@ export default function HomePage() {
     []
   );
   const closeQuote = useCallback(() => setQuote(null), []);
+
+  const openDirectory = useCallback(() => setDirectoryOpen(true), []);
+  const closeDirectory = useCallback(() => setDirectoryOpen(false), []);
 
   // Intro curtain — one beat, then out. Skipped entirely under reduced motion
   // (loading starts as false via the lazy initializer above).
@@ -227,6 +234,8 @@ export default function HomePage() {
             </div>
           </div>
         </div>
+
+        <QuickTrustBar onOpenDirectory={openDirectory} />
 
         <div id="about" data-wrap="1" data-band2="1" style={{ maxWidth: "1240px", margin: "0 auto", padding: "96px 32px 80px" }}>
           <div data-reveal="1" style={{ display: "inline-block", border: "1px solid rgba(10,62,72,0.28)", borderRadius: "999px", padding: "9px 18px", fontSize: "11.5px", fontWeight: "600", letterSpacing: "0.14em", color: "#0A3E48" }}>ABOUT COMPANY</div>
@@ -409,6 +418,11 @@ export default function HomePage() {
           </div>
         </>) : null}
 
+        <ClientShowcaseSection
+          onOpenDirectory={openDirectory}
+          onOpenQuoteRefs={openQuoteRefs}
+        />
+
         <div id="catalogue" data-band2="1" style={{ background: "#F1EFEA", padding: "90px 0 96px" }}>
           <div data-wrap="1" style={{ maxWidth: "1240px", margin: "0 auto", padding: "0 32px" }}>
             <div data-reveal="1" style={{ display: "inline-block", border: "1px solid rgba(10,62,72,0.28)", borderRadius: "999px", padding: "9px 18px", fontSize: "11.5px", fontWeight: "600", letterSpacing: "0.14em", color: "#0A3E48" }}>COMPLETE CATALOGUE</div>
@@ -571,6 +585,12 @@ export default function HomePage() {
         title={quote?.title ?? ''}
         onClose={closeQuote}
         source="home"
+      />
+
+      <ClientDirectoryModal
+        isOpen={directoryOpen}
+        onClose={closeDirectory}
+        onRequestQuote={openQuoteRefs}
       />
     </div>
   );
