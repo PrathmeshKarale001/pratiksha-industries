@@ -17,7 +17,6 @@ export default function QuickTrustBar({ onOpenDirectory }: QuickTrustBarProps) {
       style={{
         position: 'relative',
         width: '100%',
-        maxWidth: '1380px',
         margin: '0 auto',
         padding: '0 14px 20px',
       }}
