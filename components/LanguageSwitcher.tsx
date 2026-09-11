@@ -153,6 +153,7 @@ export default function LanguageSwitcher({ compact }: LanguageSwitcherProps) {
   return (
     <div
       ref={dropRef}
+      data-langswitcher="1"
       style={{ position: 'relative', display: 'inline-flex', flexShrink: 0 }}
     >
       {/* Trigger Button */}
