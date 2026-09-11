@@ -137,8 +137,8 @@ export default function AboutPage() {
         <div data-wrap="1" style={{ maxWidth: "1320px", margin: "0 auto", padding: "96px 32px 0" }}>
           <div data-foundergrid="1" style={{ display: "grid", gridTemplateColumns: "minmax(240px, 340px) minmax(0, 1fr)", gap: "clamp(32px, 4vw, 64px)", alignItems: "start" }}>
             <div data-reveal="1">
-              <div data-founderimg="1" style={{ borderRadius: "20px", overflow: "hidden", background: "#EFEDE6", aspectRatio: "1.02", display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '24px', textAlign: 'center', fontSize: '14.5px', color: '#6E756F' }}>
-                Drop a photo of Mr. Pradeep Hatte here
+              <div data-founderimg="1" style={{ borderRadius: "20px", overflow: "hidden", background: "#EFEDE6", aspectRatio: "1.02" }}>
+                <img src="/assets/founder.jpg" alt="Mr. Pradeep Hatte — Founder & Proprietor, Pratiksha Industries" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
               </div>
               <div style={{ marginTop: "18px", display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "16px" }}>
                 <div>

@@ -26,7 +26,7 @@ export default function ClientShowcaseSection({
       data-band="clients"
       data-band2="1"
       style={{
-        background: 'linear-gradient(180deg, #072B32 0%, #0A3E48 50%, #052126 100%)',
+        background: 'linear-gradient(180deg, #0D3D47 0%, #12545F 50%, #0A3640 100%)',
         padding: '104px 0 108px',
         position: 'relative',
         overflow: 'hidden',
@@ -63,7 +63,7 @@ export default function ClientShowcaseSection({
       <div
         data-wrap="1"
         style={{
-          maxWidth: '1280px',
+          maxWidth: '1492px',
           margin: '0 auto',
           padding: '0 32px',
           position: 'relative',
@@ -384,7 +384,7 @@ export default function ClientShowcaseSection({
         {/* Subtle Section Divider */}
         <div
           style={{
-            maxWidth: '1280px',
+            maxWidth: '1492px',
             margin: '0 auto 12px',
             padding: '0 32px',
             width: '100%',
@@ -557,7 +557,7 @@ export default function ClientShowcaseSection({
       <div
         data-wrap="1"
         style={{
-          maxWidth: '1280px',
+          maxWidth: '1492px',
           margin: '56px auto 0',
           padding: '0 32px',
           position: 'relative',

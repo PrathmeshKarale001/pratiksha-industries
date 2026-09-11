@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation';
 import { AnimatePresence, motion } from 'framer-motion';
 import { nav, site } from '@/content/site';
 import { useLockScroll, useEscape } from '@/lib/hooks';
+import LanguageSwitcher from '@/components/LanguageSwitcher';
 
 type Props = {
   /** 'glass' over a dark hero, 'solid' once it has scrolled past. */
@@ -167,6 +168,7 @@ export default function Navbar({ mode, compact, onQuote }: Props) {
               />
               {site.certification}
             </span>
+            <LanguageSwitcher compact />
             {onQuote ? (
               <button
                 type="button"
@@ -414,9 +416,12 @@ export default function Navbar({ mode, compact, onQuote }: Props) {
                 )}
 
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', paddingTop: '4px' }}>
-                  <span style={{ fontSize: '12px', fontWeight: 600, letterSpacing: '0.12em', color: '#6E756F' }}>
-                    {site.certification}
-                  </span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                    <span style={{ fontSize: '12px', fontWeight: 600, letterSpacing: '0.12em', color: '#6E756F' }}>
+                      {site.certification}
+                    </span>
+                    <LanguageSwitcher />
+                  </div>
                   <span style={{ fontSize: '12px', fontWeight: 600, letterSpacing: '0.12em', color: '#8A6A1F' }}>
                     KHED SHIVAPUR, PUNE
                   </span>
