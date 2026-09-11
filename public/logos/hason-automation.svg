@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="240" height="60" viewBox="0 0 240 60">
+  <circle cx="28" cy="30" r="15" stroke="#0091EA" stroke-width="3" fill="none"/>
+  <circle cx="28" cy="30" r="6" fill="#0091EA"/>
+  <text x="52" y="32" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="800" font-size="16" letter-spacing="0.8" fill="#0091EA">HASON</text>
+  <text x="52" y="45" font-family="'Plus Jakarta Sans', Arial, sans-serif" font-weight="600" font-size="9" letter-spacing="1.2" fill="#40C4FF">AUTOMATION</text>
+</svg>

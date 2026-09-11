@@ -183,7 +183,7 @@ export default function ClientShowcaseSection({
                     marginTop: '2px',
                   }}
                 >
-                  Industrial Clients
+                  Enterprise Clients
                 </div>
               </div>
 
@@ -268,13 +268,13 @@ export default function ClientShowcaseSection({
                 data-reveal-delay={idx * 60}
                 style={{
                   background: 'rgba(255, 255, 255, 0.05)',
-                  border: '1px solid rgba(255, 255, 255, 0.1)',
+                  border: '1px solid rgba(255, 255, 255, 0.12)',
                   borderRadius: '18px',
                   padding: '24px 22px 20px',
                   display: 'flex',
                   flexDirection: 'column',
                   justifyContent: 'space-between',
-                  minHeight: '190px',
+                  minHeight: '200px',
                   transition: 'all 320ms cubic-bezier(0.22, 1, 0.36, 1)',
                   cursor: 'pointer',
                   position: 'relative',
@@ -286,44 +286,30 @@ export default function ClientShowcaseSection({
                   e.currentTarget.style.borderColor = '#F0DE9C';
                   e.currentTarget.style.transform = 'translateY(-5px)';
                   e.currentTarget.style.boxShadow =
-                    '0 18px 36px -8px rgba(0, 0, 0, 0.55), 0 0 20px rgba(240, 222, 156, 0.15)';
-                  const logo = e.currentTarget.querySelector(
-                    '.client-logo-wrapper'
-                  ) as HTMLElement;
-                  if (logo) {
-                    logo.style.filter = 'none';
-                    logo.style.transform = 'scale(1.06)';
-                  }
+                    '0 18px 36px -8px rgba(0, 0, 0, 0.55), 0 0 20px rgba(240, 222, 156, 0.2)';
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.1)';
+                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.12)';
                   e.currentTarget.style.transform = 'translateY(0)';
                   e.currentTarget.style.boxShadow = 'none';
-                  const logo = e.currentTarget.querySelector(
-                    '.client-logo-wrapper'
-                  ) as HTMLElement;
-                  if (logo) {
-                    logo.style.filter =
-                      'grayscale(1) brightness(1.2) opacity(0.82)';
-                    logo.style.transform = 'scale(1)';
-                  }
                 }}
               >
-                {/* Logo Display Box */}
+                {/* Logo Display Box: Crisp white container */}
                 <div
                   style={{
-                    height: '56px',
+                    height: '62px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    background: 'rgba(0, 0, 0, 0.25)',
+                    background: '#FFFFFF',
                     borderRadius: '12px',
-                    padding: '8px',
+                    padding: '8px 16px',
                     marginBottom: '16px',
+                    boxShadow: '0 4px 12px rgba(0,0,0,0.18)',
                   }}
                 >
-                  <ClientLogo client={client} height={42} maxWidth={200} />
+                  <ClientLogo client={client} height={44} maxWidth={190} />
                 </div>
 
                 {/* Meta details */}
@@ -467,7 +453,7 @@ export default function ClientShowcaseSection({
               display: 'flex',
               alignItems: 'center',
               width: 'max-content',
-              animation: 'pi-marquee-left 48s linear infinite',
+              animation: 'pi-marquee-left 52s linear infinite',
               gap: '16px',
             }}
             onMouseEnter={(e) => {
@@ -481,37 +467,31 @@ export default function ClientShowcaseSection({
               <div
                 key={`r1-${client.id}-${i}`}
                 style={{
-                  background: 'rgba(255, 255, 255, 0.06)',
-                  border: '1px solid rgba(255, 255, 255, 0.12)',
+                  background: '#FFFFFF',
+                  border: '1px solid rgba(240, 222, 156, 0.4)',
                   borderRadius: '14px',
-                  padding: '14px 24px',
-                  minWidth: '220px',
-                  height: '76px',
+                  padding: '10px 22px',
+                  minWidth: '200px',
+                  height: '66px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
+                  boxShadow: '0 4px 14px rgba(0, 0, 0, 0.18)',
                   transition: 'all 240ms ease',
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.12)';
+                  e.currentTarget.style.transform = 'translateY(-2px) scale(1.04)';
                   e.currentTarget.style.borderColor = '#F0DE9C';
-                  const logo = e.currentTarget.querySelector(
-                    '.client-logo-wrapper'
-                  ) as HTMLElement;
-                  if (logo) logo.style.filter = 'none';
+                  e.currentTarget.style.boxShadow =
+                    '0 8px 20px rgba(0,0,0,0.3), 0 0 14px rgba(240,222,156,0.35)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.06)';
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.12)';
-                  const logo = e.currentTarget.querySelector(
-                    '.client-logo-wrapper'
-                  ) as HTMLElement;
-                  if (logo)
-                    logo.style.filter =
-                      'grayscale(1) brightness(1.2) opacity(0.82)';
+                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                  e.currentTarget.style.borderColor = 'rgba(240, 222, 156, 0.4)';
+                  e.currentTarget.style.boxShadow = '0 4px 14px rgba(0, 0, 0, 0.18)';
                 }}
               >
-                <ClientLogo client={client} height={38} maxWidth={170} />
+                <ClientLogo client={client} height={42} maxWidth={160} />
               </div>
             ))}
           </div>
@@ -528,7 +508,7 @@ export default function ClientShowcaseSection({
               display: 'flex',
               alignItems: 'center',
               width: 'max-content',
-              animation: 'pi-marquee-right 52s linear infinite',
+              animation: 'pi-marquee-right 56s linear infinite',
               gap: '16px',
             }}
             onMouseEnter={(e) => {
@@ -542,37 +522,31 @@ export default function ClientShowcaseSection({
               <div
                 key={`r2-${client.id}-${i}`}
                 style={{
-                  background: 'rgba(255, 255, 255, 0.06)',
-                  border: '1px solid rgba(255, 255, 255, 0.12)',
+                  background: '#FFFFFF',
+                  border: '1px solid rgba(240, 222, 156, 0.4)',
                   borderRadius: '14px',
-                  padding: '14px 24px',
-                  minWidth: '220px',
-                  height: '76px',
+                  padding: '10px 22px',
+                  minWidth: '200px',
+                  height: '66px',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
+                  boxShadow: '0 4px 14px rgba(0, 0, 0, 0.18)',
                   transition: 'all 240ms ease',
                 }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.12)';
+                  e.currentTarget.style.transform = 'translateY(-2px) scale(1.04)';
                   e.currentTarget.style.borderColor = '#F0DE9C';
-                  const logo = e.currentTarget.querySelector(
-                    '.client-logo-wrapper'
-                  ) as HTMLElement;
-                  if (logo) logo.style.filter = 'none';
+                  e.currentTarget.style.boxShadow =
+                    '0 8px 20px rgba(0,0,0,0.3), 0 0 14px rgba(240,222,156,0.35)';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'rgba(255, 255, 255, 0.06)';
-                  e.currentTarget.style.borderColor = 'rgba(255, 255, 255, 0.12)';
-                  const logo = e.currentTarget.querySelector(
-                    '.client-logo-wrapper'
-                  ) as HTMLElement;
-                  if (logo)
-                    logo.style.filter =
-                      'grayscale(1) brightness(1.2) opacity(0.82)';
+                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                  e.currentTarget.style.borderColor = 'rgba(240, 222, 156, 0.4)';
+                  e.currentTarget.style.boxShadow = '0 4px 14px rgba(0, 0, 0, 0.18)';
                 }}
               >
-                <ClientLogo client={client} height={38} maxWidth={170} />
+                <ClientLogo client={client} height={42} maxWidth={160} />
               </div>
             ))}
           </div>

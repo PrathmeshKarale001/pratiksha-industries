@@ -25,11 +25,11 @@ export default function QuickTrustBar({ onOpenDirectory }: QuickTrustBarProps) {
       <div
         style={{
           background: 'linear-gradient(180deg, #062B32 0%, #0A3E48 100%)',
-          borderRadius: '16px',
-          border: '1px solid rgba(240, 222, 156, 0.16)',
-          boxShadow: '0 18px 40px -10px rgba(4, 26, 32, 0.35)',
+          borderRadius: '18px',
+          border: '1px solid rgba(240, 222, 156, 0.22)',
+          boxShadow: '0 18px 40px -10px rgba(4, 26, 32, 0.45)',
           overflow: 'hidden',
-          padding: '24px 0 20px',
+          padding: '22px 0 20px',
           position: 'relative',
         }}
       >
@@ -40,7 +40,7 @@ export default function QuickTrustBar({ onOpenDirectory }: QuickTrustBarProps) {
             alignItems: 'center',
             justifyContent: 'space-between',
             padding: '0 28px 16px',
-            borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
+            borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
             flexWrap: 'wrap',
             gap: '12px',
           }}
@@ -71,11 +71,11 @@ export default function QuickTrustBar({ onOpenDirectory }: QuickTrustBarProps) {
             </span>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '18px' }}>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
             <span
               style={{
                 fontSize: '12px',
-                color: 'rgba(255, 255, 255, 0.6)',
+                color: 'rgba(255, 255, 255, 0.72)',
                 fontWeight: '500',
               }}
             >
@@ -86,13 +86,13 @@ export default function QuickTrustBar({ onOpenDirectory }: QuickTrustBarProps) {
                 type="button"
                 onClick={onOpenDirectory}
                 style={{
-                  background: 'rgba(240, 222, 156, 0.12)',
-                  border: '1px solid rgba(240, 222, 156, 0.3)',
+                  background: 'rgba(240, 222, 156, 0.15)',
+                  border: '1px solid rgba(240, 222, 156, 0.4)',
                   color: '#F0DE9C',
-                  fontSize: '11px',
+                  fontSize: '11.5px',
                   fontWeight: '700',
-                  letterSpacing: '0.08em',
-                  padding: '6px 12px',
+                  letterSpacing: '0.06em',
+                  padding: '6px 14px',
                   borderRadius: '999px',
                   cursor: 'pointer',
                   display: 'inline-flex',
@@ -105,7 +105,7 @@ export default function QuickTrustBar({ onOpenDirectory }: QuickTrustBarProps) {
                   e.currentTarget.style.color = '#0A3E48';
                 }}
                 onMouseLeave={(e) => {
-                  e.currentTarget.style.background = 'rgba(240, 222, 156, 0.12)';
+                  e.currentTarget.style.background = 'rgba(240, 222, 156, 0.15)';
                   e.currentTarget.style.color = '#F0DE9C';
                 }}
               >
@@ -123,7 +123,7 @@ export default function QuickTrustBar({ onOpenDirectory }: QuickTrustBarProps) {
             left: 0,
             top: '55px',
             bottom: 0,
-            width: '80px',
+            width: '90px',
             background: 'linear-gradient(90deg, #062B32 0%, transparent 100%)',
             zIndex: 2,
             pointerEvents: 'none',
@@ -135,7 +135,7 @@ export default function QuickTrustBar({ onOpenDirectory }: QuickTrustBarProps) {
             right: 0,
             top: '55px',
             bottom: 0,
-            width: '80px',
+            width: '90px',
             background: 'linear-gradient(270deg, #062B32 0%, transparent 100%)',
             zIndex: 2,
             pointerEvents: 'none',
@@ -158,7 +158,9 @@ export default function QuickTrustBar({ onOpenDirectory }: QuickTrustBarProps) {
               display: 'flex',
               alignItems: 'center',
               width: 'max-content',
-              animation: 'pi-trust-marquee 36s linear infinite',
+              animation: 'pi-trust-marquee 38s linear infinite',
+              gap: '16px',
+              paddingLeft: '16px',
             }}
             onMouseEnter={(e) => {
               e.currentTarget.style.animationPlayState = 'paused';
@@ -172,28 +174,31 @@ export default function QuickTrustBar({ onOpenDirectory }: QuickTrustBarProps) {
                 key={`${client.id}-${idx}`}
                 style={{
                   flexShrink: 0,
+                  background: '#FFFFFF',
+                  borderRadius: '12px',
+                  border: '1px solid rgba(240, 222, 156, 0.45)',
+                  padding: '8px 18px',
                   display: 'flex',
                   alignItems: 'center',
-                  padding: '0 28px',
-                  borderRight: '1px solid rgba(255, 255, 255, 0.08)',
-                  transition: 'transform 260ms ease, opacity 260ms ease',
+                  justifyContent: 'center',
+                  height: '56px',
+                  minWidth: '150px',
+                  boxShadow: '0 4px 14px rgba(0, 0, 0, 0.18)',
+                  transition: 'all 240ms ease',
                 }}
                 onMouseEnter={(e) => {
-                  const logo = e.currentTarget.querySelector('.client-logo-wrapper') as HTMLElement;
-                  if (logo) {
-                    logo.style.filter = 'none';
-                    logo.style.transform = 'scale(1.08)';
-                  }
+                  e.currentTarget.style.transform = 'translateY(-2px) scale(1.04)';
+                  e.currentTarget.style.borderColor = '#C4A24F';
+                  e.currentTarget.style.boxShadow =
+                    '0 8px 22px rgba(0,0,0,0.3), 0 0 16px rgba(240,222,156,0.35)';
                 }}
                 onMouseLeave={(e) => {
-                  const logo = e.currentTarget.querySelector('.client-logo-wrapper') as HTMLElement;
-                  if (logo) {
-                    logo.style.filter = 'grayscale(1) brightness(1.2) opacity(0.82)';
-                    logo.style.transform = 'scale(1)';
-                  }
+                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                  e.currentTarget.style.borderColor = 'rgba(240, 222, 156, 0.45)';
+                  e.currentTarget.style.boxShadow = '0 4px 14px rgba(0, 0, 0, 0.18)';
                 }}
               >
-                <ClientLogo client={client} height={38} maxWidth={160} />
+                <ClientLogo client={client} height={38} maxWidth={130} />
               </div>
             ))}
           </div>

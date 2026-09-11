@@ -1,7 +1,7 @@
 'use client';
 
 import React, { useState, useEffect, useMemo } from 'react';
-import { clients, CLIENT_CATEGORIES, ClientItem } from '@/content/clients';
+import { clients, CLIENT_CATEGORIES } from '@/content/clients';
 import ClientLogo from './ClientLogo';
 
 interface ClientDirectoryModalProps {
@@ -415,11 +415,11 @@ export default function ClientDirectoryModal({
                   <div
                     key={client.id}
                     style={{
-                      background: 'rgba(255, 255, 255, 0.05)',
+                      background: 'rgba(255, 255, 255, 0.06)',
                       borderRadius: '16px',
                       border: isInternational
-                        ? '1px solid rgba(240, 222, 156, 0.4)'
-                        : '1px solid rgba(255, 255, 255, 0.1)',
+                        ? '1px solid rgba(240, 222, 156, 0.45)'
+                        : '1px solid rgba(255, 255, 255, 0.12)',
                       padding: '20px 18px 18px',
                       display: 'flex',
                       flexDirection: 'column',
@@ -428,34 +428,19 @@ export default function ClientDirectoryModal({
                       position: 'relative',
                     }}
                     onMouseEnter={(e) => {
-                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.12)';
                       e.currentTarget.style.borderColor = '#F0DE9C';
                       e.currentTarget.style.transform = 'translateY(-4px)';
                       e.currentTarget.style.boxShadow =
                         '0 12px 28px -6px rgba(0, 0, 0, 0.45)';
-                      const logo = e.currentTarget.querySelector(
-                        '.client-logo-wrapper'
-                      ) as HTMLElement;
-                      if (logo) {
-                        logo.style.filter = 'none';
-                        logo.style.transform = 'scale(1.05)';
-                      }
                     }}
                     onMouseLeave={(e) => {
-                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.05)';
+                      e.currentTarget.style.background = 'rgba(255, 255, 255, 0.06)';
                       e.currentTarget.style.borderColor = isInternational
-                        ? 'rgba(240, 222, 156, 0.4)'
-                        : 'rgba(255, 255, 255, 0.1)';
+                        ? 'rgba(240, 222, 156, 0.45)'
+                        : 'rgba(255, 255, 255, 0.12)';
                       e.currentTarget.style.transform = 'translateY(0)';
                       e.currentTarget.style.boxShadow = 'none';
-                      const logo = e.currentTarget.querySelector(
-                        '.client-logo-wrapper'
-                      ) as HTMLElement;
-                      if (logo) {
-                        logo.style.filter =
-                          'grayscale(1) brightness(1.2) opacity(0.82)';
-                        logo.style.transform = 'scale(1)';
-                      }
                     }}
                   >
                     {/* Country Badge */}
@@ -484,20 +469,21 @@ export default function ClientDirectoryModal({
                       </div>
                     )}
 
-                    {/* Logo Section */}
+                    {/* Logo Section: Crisp white container */}
                     <div
                       style={{
-                        height: '64px',
+                        height: '66px',
                         display: 'flex',
                         alignItems: 'center',
                         justifyContent: 'center',
-                        padding: '6px',
-                        background: 'rgba(0, 0, 0, 0.22)',
-                        borderRadius: '10px',
+                        padding: '8px 14px',
+                        background: '#FFFFFF',
+                        borderRadius: '12px',
                         marginBottom: '14px',
+                        boxShadow: '0 4px 12px rgba(0, 0, 0, 0.18)',
                       }}
                     >
-                      <ClientLogo client={client} height={44} maxWidth={200} />
+                      <ClientLogo client={client} height={46} maxWidth={200} />
                     </div>
 
                     {/* Details */}
