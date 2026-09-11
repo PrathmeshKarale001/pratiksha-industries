@@ -2,7 +2,7 @@
 
 export const stats = [
   { display: "15,000", to: 15000, suffix: "", label: "SQ. FT. FACILITY", bg: "#0A3E48", fg: "#F0DE9C", sub: "rgba(255,255,255,0.6)", delay: 0 },
-  { display: "30+", to: 30, suffix: "", label: "SKILLED WORKFORCE", bg: "#FFFFFF", fg: "#0A3E48", sub: "#6E756F", delay: 90 },
+  { display: "30", to: 30, suffix: "+", label: "SKILLED WORKFORCE", bg: "#FFFFFF", fg: "#0A3E48", sub: "#6E756F", delay: 90 },
   { display: "7", to: 7, suffix: "", label: "MATERIAL FINISHES", bg: "#FFFFFF", fg: "#0A3E48", sub: "#6E756F", delay: 180 },
   { display: "50", to: 50, suffix: "+", label: "PRODUCTS IN RANGE", bg: "#F0DE9C", fg: "#0A3E48", sub: "rgba(10,62,72,0.65)", delay: 270 }
 ] as const;
