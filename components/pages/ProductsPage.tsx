@@ -479,8 +479,8 @@ export default function ProductsPage() {
                       Enquire about this item
                       <span style={{ fontSize: "17px" }}>&#8594;</span>
                     </button>
-                    <a href="Pratiksha%20Industries%20v4.dc.html#catalogue" style={{ border: "1px solid rgba(255,255,255,0.3)", color: "#FFFFFF", borderRadius: "14px", padding: "18px 22px", fontSize: "15px", fontWeight: "600", display: "flex", alignItems: "center", gap: "10px", transition: "border-color 260ms, color 260ms, transform 260ms cubic-bezier(0.34,1.5,0.64,1)" }} data-x="x26">
-                      Spec sheet
+                    <a href="/pdfs/Product catalogue.pdf" download target="_blank" rel="noopener noreferrer" style={{ border: "1px solid rgba(255,255,255,0.3)", color: "#FFFFFF", borderRadius: "14px", padding: "18px 22px", fontSize: "15px", fontWeight: "600", display: "flex", alignItems: "center", gap: "10px", transition: "border-color 260ms, color 260ms, transform 260ms cubic-bezier(0.34,1.5,0.64,1)" }} data-x="x26">
+                      Catalogue
                       <span style={{ fontSize: "16px" }}>&#8595;</span>
                     </a>
                   </div>

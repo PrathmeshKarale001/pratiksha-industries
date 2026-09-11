@@ -428,7 +428,7 @@ export default function HomePage() {
             <div data-reveal="1" style={{ display: "inline-block", border: "1px solid rgba(10,62,72,0.28)", borderRadius: "999px", padding: "9px 18px", fontSize: "11.5px", fontWeight: "600", letterSpacing: "0.14em", color: "#0A3E48" }}>COMPLETE CATALOGUE</div>
             <div data-sechead="1" style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "48px", marginTop: "30px" }}>
               <h2 data-reveal="1" data-reveal-delay="80" style={{ margin: "0", fontSize: "clamp(32px, 4.2vw, 58px)", lineHeight: "1.02", fontWeight: "700", letterSpacing: "-0.035em", color: "#16211F" }}>{catalogueHeadline}</h2>
-              <a data-reveal="1" data-reveal-delay="160" href="#contact" style={{ display: "inline-flex", alignItems: "center", gap: "11px", background: "#8AA7AC", color: "#FFFFFF", fontWeight: "600", fontSize: "15px", padding: "19px 30px", borderRadius: "14px", whiteSpace: "nowrap", transition: "transform 260ms cubic-bezier(0.34,1.5,0.64,1), background 260ms" }} data-x="x23">
+              <a data-reveal="1" data-reveal-delay="160" href="/pdfs/Product catalogue.pdf" download target="_blank" rel="noopener noreferrer" style={{ display: "inline-flex", alignItems: "center", gap: "11px", background: "#8AA7AC", color: "#FFFFFF", fontWeight: "600", fontSize: "15px", padding: "19px 30px", borderRadius: "14px", whiteSpace: "nowrap", transition: "transform 260ms cubic-bezier(0.34,1.5,0.64,1), background 260ms" }} data-x="x23">
                 <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: "#F0DE9C", display: "block" }}></span>
                 Download PDF
               </a>

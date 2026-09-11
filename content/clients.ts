@@ -89,7 +89,7 @@ export const clients: ClientItem[] = [
     location: 'Navi Mumbai / Mangalore',
     country: 'India',
     highlight: 'World Leading Chemical Enterprise',
-    logoPath: '/logos/basf.svg'
+    logoPath: '/logos/basf.png'
   },
   {
     id: 'thermax',
@@ -111,7 +111,7 @@ export const clients: ClientItem[] = [
     location: 'Hazira, Gujarat',
     country: 'India',
     highlight: 'ArcelorMittal Nippon Steel Joint Venture',
-    logoPath: '/logos/amns.svg'
+    logoPath: '/logos/amns.png'
   },
   {
     id: 'praj',
@@ -155,7 +155,7 @@ export const clients: ClientItem[] = [
     location: 'Mumbai / Pan India',
     country: 'India',
     highlight: 'Water & Environment Management Pioneer',
-    logoPath: '/logos/ion-exchange.svg'
+    logoPath: '/logos/ion-exchange.png'
   },
   {
     id: 'pcbl',
@@ -166,7 +166,7 @@ export const clients: ClientItem[] = [
     location: 'Kolkata / Kochi / Palej',
     country: 'India',
     highlight: "India's Largest Carbon Black Manufacturer",
-    logoPath: '/logos/pcbl.svg'
+    logoPath: '/logos/pcbl.jpg'
   },
   {
     id: 'isgec',
@@ -199,7 +199,7 @@ export const clients: ClientItem[] = [
     location: 'Mumbai / Pan India',
     country: 'India',
     highlight: 'Premier Civil & Marine Infrastructure EPC',
-    logoPath: '/logos/itd-cementation.svg'
+    logoPath: '/logos/itd-cementation.png'
   },
   {
     id: 'godrej-properties',
@@ -225,7 +225,7 @@ export const clients: ClientItem[] = [
     location: 'Jakarta / Sumatra',
     country: 'Indonesia',
     highlight: 'Integrated Modern Sugar Milling Complex',
-    logoPath: '/logos/pt-wahana-gula.svg'
+    logoPath: '/logos/pt-wahana-gula.jpg'
   },
   {
     id: 'caribbean-sugar',
@@ -236,7 +236,7 @@ export const clients: ClientItem[] = [
     location: 'Belize, Central America',
     country: 'Belize',
     highlight: 'Central American Sugar Refinery & Co-Gen Plant',
-    logoPath: '/logos/caribbean-sugar.svg'
+    logoPath: '/logos/caribbean-sugar.png'
   },
   {
     id: 'bharat-international',
@@ -247,7 +247,7 @@ export const clients: ClientItem[] = [
     location: 'Mumbai / Global Exports',
     country: 'International',
     highlight: 'Cross-Border Engineering & Trading',
-    logoPath: '/logos/bharat-international.svg'
+    logoPath: '/logos/bharat-international.jpg'
   },
 
   // ==========================================
@@ -262,7 +262,7 @@ export const clients: ClientItem[] = [
     location: 'Uttar Pradesh / New Delhi',
     country: 'India',
     highlight: 'Pioneer in Sugar, Distillery & Green Energy',
-    logoPath: '/logos/dalmia-sugar.svg'
+    logoPath: '/logos/dalmia-sugar.png'
   },
   {
     id: 'alpine-ethanol',
@@ -273,7 +273,7 @@ export const clients: ClientItem[] = [
     location: 'Maharashtra',
     country: 'India',
     highlight: 'Advanced Biofuel & Grain Ethanol Distilleries',
-    logoPath: '/logos/alpine-ethanol.svg'
+    logoPath: '/logos/alpine-ethanol.png'
   },
   {
     id: 'sri-sarvaraya',
@@ -284,7 +284,7 @@ export const clients: ClientItem[] = [
     location: 'Chelluru / Andhra Pradesh',
     country: 'India',
     highlight: 'Sugar Milling, Distilleries & Power',
-    logoPath: '/logos/sri-sarvaraya.svg'
+    logoPath: '/logos/sri-sarvaraya.jpg'
   },
   {
     id: 'regreen-excel',
@@ -295,7 +295,7 @@ export const clients: ClientItem[] = [
     location: 'Pune / Pan India',
     country: 'India',
     highlight: 'Global EPC for Distillery & Ethanol Projects',
-    logoPath: '/logos/regreen-excel.svg'
+    logoPath: '/logos/regreen-excel.png'
   },
   {
     id: 'shrijee',
@@ -306,7 +306,7 @@ export const clients: ClientItem[] = [
     location: 'Mumbai / Pune',
     country: 'India',
     highlight: 'Sugar Equipment & Turnkey Solutions',
-    logoPath: '/logos/shrijee.svg'
+    logoPath: '/logos/shrijee.png'
   },
   {
     id: 'neelshri-sugar',
@@ -317,7 +317,7 @@ export const clients: ClientItem[] = [
     location: 'Maharashtra',
     country: 'India',
     highlight: 'Cane Processing & Co-Generation Sugar Plant',
-    logoPath: '/logos/neelshri-sugar.svg'
+    logoPath: '/logos/neelshri-sugar.jpg'
   },
 
   // ==========================================
@@ -332,7 +332,7 @@ export const clients: ClientItem[] = [
     location: 'Mumbai / Bangalore',
     country: 'India',
     highlight: "Asia's Leading Renewable Energy Provider",
-    logoPath: '/logos/cleanmax.svg'
+    logoPath: '/logos/cleanmax.png'
   },
   {
     id: 'enexio',
@@ -343,7 +343,7 @@ export const clients: ClientItem[] = [
     location: 'Chennai / Pune',
     country: 'India',
     highlight: 'Advanced Power Plant Wet & Dry Cooling',
-    logoPath: '/logos/enexio.svg'
+    logoPath: '/logos/enexio.png'
   },
   {
     id: 'aryan-boilers',
@@ -354,7 +354,7 @@ export const clients: ClientItem[] = [
     location: 'Pune, Maharashtra',
     country: 'India',
     highlight: 'Industrial Boilers & Thermal Energy Plants',
-    logoPath: '/logos/aryan-boilers.svg'
+    logoPath: '/logos/aryan-boilers.png'
   },
   {
     id: 'sagar-cement',
@@ -365,7 +365,7 @@ export const clients: ClientItem[] = [
     location: 'Hyderabad, Telangana',
     country: 'India',
     highlight: 'Heavy Industrial Cement & Clinker Plants',
-    logoPath: '/logos/sagar-cement.svg'
+    logoPath: '/logos/sagar-cements.jpeg'
   },
 
   // ==========================================
@@ -377,8 +377,8 @@ export const clients: ClientItem[] = [
     legalName: 'Dürr CTS Private Limited',
     category: 'Automation & Technology',
     tier: 'standard',
-    location: 'Chennai / Pune',
-    country: 'India',
+    location: 'Chennai / Pune (HQ: Germany)',
+    country: 'International',
     highlight: 'Clean Technology Systems & Environmental Control',
     logoPath: '/logos/durr.svg'
   },
@@ -391,7 +391,7 @@ export const clients: ClientItem[] = [
     location: 'Pune / Global HQ South Africa',
     country: 'India',
     highlight: 'Industry 4.0 Automotive Assembly Automation',
-    logoPath: '/logos/jendamark.svg'
+    logoPath: '/logos/jendamark.jpg'
   },
   {
     id: 'hason-automation',
@@ -402,7 +402,7 @@ export const clients: ClientItem[] = [
     location: 'Pune, Maharashtra',
     country: 'India',
     highlight: 'Industrial Robotic & Special Purpose Systems',
-    logoPath: '/logos/hason-automation.svg'
+    logoPath: '/logos/hason-automation.jpg'
   },
   {
     id: 'victoria-automation',
@@ -413,7 +413,7 @@ export const clients: ClientItem[] = [
     location: 'Pune / Mumbai',
     country: 'India',
     highlight: 'Instrumentation & Process Control Panels',
-    logoPath: '/logos/victoria-automation.svg'
+    logoPath: '/logos/victoria-automation.png'
   },
   {
     id: 'interlux-electronics',
@@ -424,7 +424,7 @@ export const clients: ClientItem[] = [
     location: 'Pune, Maharashtra',
     country: 'India',
     highlight: 'Industrial Electronic Hardware & Systems',
-    logoPath: '/logos/interlux-electronics.svg'
+    logoPath: '/logos/interlux-electronics.jpg'
   },
 
   // ==========================================
@@ -439,7 +439,7 @@ export const clients: ClientItem[] = [
     location: 'Navi Mumbai, Maharashtra',
     country: 'India',
     highlight: 'Plant Piping & Mechanical EPC Contractors',
-    logoPath: '/logos/miraj-engineering.svg'
+    logoPath: '/logos/miraj-engineering.jpg'
   },
   {
     id: 'oilfields-services',
@@ -450,7 +450,7 @@ export const clients: ClientItem[] = [
     location: 'Mumbai, Maharashtra',
     country: 'India',
     highlight: 'Upstream Oil & Gas Drilling Infrastructure',
-    logoPath: '/logos/oilfields-services.svg'
+    logoPath: '/logos/oilfields-services.png'
   },
   {
     id: 'scon-projects',
@@ -461,7 +461,7 @@ export const clients: ClientItem[] = [
     location: 'Pune, Maharashtra',
     country: 'India',
     highlight: 'Industrial Construction & Infrastructure Projects',
-    logoPath: '/logos/scon-projects.svg'
+    logoPath: '/logos/scon-projects.png'
   },
   {
     id: 'avion-engineers',
@@ -472,7 +472,7 @@ export const clients: ClientItem[] = [
     location: 'Pune / Mumbai',
     country: 'India',
     highlight: 'Precision Heavy Machining & Fabrication',
-    logoPath: '/logos/avion-engineers.svg'
+    logoPath: '/logos/avion-engineers.png'
   },
   {
     id: 'maa-mangala',
@@ -483,7 +483,7 @@ export const clients: ClientItem[] = [
     location: 'Odisha / Eastern India',
     country: 'India',
     highlight: 'Heavy Metal & Mineral Processing Facilities',
-    logoPath: '/logos/maa-mangala.svg'
+    logoPath: '/logos/maa-mangala.png'
   },
   {
     id: 'basf-materials',
@@ -494,7 +494,7 @@ export const clients: ClientItem[] = [
     location: 'Thane / Chennai',
     country: 'India',
     highlight: 'High Performance Industrial Polymers & Coatings',
-    logoPath: '/logos/basf-materials.svg'
+    logoPath: '/logos/basf.png'
   }
 ];
 

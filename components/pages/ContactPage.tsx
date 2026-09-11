@@ -91,7 +91,7 @@ export default function ContactPage() {
                 </div>
                 <span style={{ display: "flex", alignItems: "center", gap: "9px", background: "#F6F4EF", borderRadius: "999px", padding: "10px 16px", fontSize: "12px", fontWeight: "600", letterSpacing: "0.1em", color: "#0A3E48", whiteSpace: "nowrap" }}>
                   <span style={{ width: "7px", height: "7px", borderRadius: "50%", background: "#C4A24F", display: "block", animation: "pi-pulse 2.4s ease-in-out infinite" }}></span>
-                  REPLY IN 48 HRS
+                  REPLY IN 12-24 HRS
                 </span>
               </div>
               <EnquiryForm source="contact" />
