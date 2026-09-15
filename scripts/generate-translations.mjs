@@ -91,7 +91,32 @@ function extractStrings() {
     'Clients', 'Catalogue', 'Contact', 'Privacy',
     'Quality Control', 'How to Order',
     'Search by company name, sector, or location',
+    // JSX paragraph strings with em-dashes (rendered from &mdash;)
+    'We manufacture more than cable trays \u2014 we build the routing, earthing and instrumentation systems that industrial plants depend on every day.',
+    'Pratiksha Industries manufactures cable trays, earthing materials and instrumentation fittings for industrial, commercial and infrastructure projects \u2014 combining advanced machinery with rigorous quality control.',
+    'Founded by Mr. Pradeep Hatte, we believe manufacturing is about more than output \u2014 it is about building partnerships, holding tolerances, and delivering on the date we promised.',
+    'Every batch carries an inspection record \u2014 raw material to dispatch \u2014 so what reaches your site matches the drawing it was quoted against.',
+    'Coating grade, load class and dimensional tolerance are confirmed per order against the applicable standard and the drawing supplied \u2014 the test and inspection records travel with the batch.',
+    'Mail the BOQ or GA drawing and we will come back with sizes, finish options and a delivery date \u2014 typically within two working days.',
+    'A cable tray only gets noticed when it fails. That is the whole reason Pratiksha Industries exists \u2014 to build the routing, support and earthing hardware that an industrial plant can stop thinking about the day it is installed.',
+    'Share a GA drawing, a bill of quantities, or simply the widths and lengths you need. We come back with sizes, finish options and a delivery date \u2014 typically within two working days.',
+    'None of it is mandatory \u2014 but each one removes a round of back-and-forth.',
+    'Trays, fittings, supports, earthing and instrumentation \u2014 drawn to your widths, gauges and finishes. Open any item for its full specification.',
+    'We fabricate to drawing as well \u2014 if it is not in the index, send us the section and we will quote it.',
+    'Non-standard widths, special rung pitches, custom bends and finishes \u2014 fabrication, galvanizing and inspection all happen in our own 15,000 sq. ft. facility at Khed Shivapur.',
+    'Drawings, sizes or bill of quantities \u2014 send them through the form and we will price them.',
+    'Need references or supplier credentials for your sector?',
+    'Explore our full directory of 40+ enterprises with active installations across sugar mills, EPCs, automotive lines, and export plants.',
+    'Explore All 40+ Clients',
+    'Request Reference Dossier',
+    'Engineered to Specification',
+    // Split text fragments that appear as individual nodes
+    'Engineered to',
+    'Specification',
+    'Built for',
+    'the Long Run',
   ];
+
 
   for (const s of uiStrings) strings.add(s);
   return [...strings].sort();

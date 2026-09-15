@@ -59,7 +59,7 @@ async function loadDictionary(lang: LangCode): Promise<Dictionary> {
 
   try {
     const res = await fetch(`/locales/${lang}.json`, {
-      cache: 'force-cache',
+      cache: 'no-cache',
     });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const dict: Dictionary = await res.json();
@@ -99,6 +99,9 @@ function restoreTextNode(node: Text): void {
   }
 }
 
+// Store original innerHTML for element-level translations
+const originalHTMLMap = new WeakMap<Element, string>();
+
 function collectTextNodes(root: Node = document.body): Text[] {
   const nodes: Text[] = [];
   const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
@@ -117,13 +120,57 @@ function collectTextNodes(root: Node = document.body): Text[] {
   return nodes;
 }
 
+// Try translating an element's full textContent when individual text nodes don't match
+function translateElement(el: Element, dict: Dictionary): boolean {
+  if (SKIP_TAGS.has(el.tagName.toLowerCase())) return false;
+  if (el.closest('[data-langswitcher]')) return false;
+
+  const rawText = el.textContent?.trim();
+  if (!rawText) return false;
+
+  // Normalize whitespace: <br> tags eat spaces, so "Engineered to\nSpecification"
+  // becomes "Engineered toSpecification". Normalize to match dictionary keys.
+  const text = rawText.replace(/\s+/g, ' ');
+  const translated = dict[text];
+  if (translated && translated !== text) {
+    // Save original innerHTML for restoration
+    if (!originalHTMLMap.has(el)) {
+      originalHTMLMap.set(el, el.innerHTML);
+    }
+    // Also save all child text nodes' originals
+    const childTexts = collectTextNodes(el);
+    for (const tn of childTexts) {
+      if (!originalTextMap.has(tn)) {
+        originalTextMap.set(tn, tn.nodeValue ?? '');
+      }
+    }
+    el.textContent = translated;
+    return true;
+  }
+  return false;
+}
+
 function translateDOM(dict: Dictionary): void {
   if (isTranslating) return;
   isTranslating = true;
 
+  // Phase 1: Try individual text nodes first
   const nodes = collectTextNodes();
+  const untranslatedParents = new Set<Element>();
+
   for (const node of nodes) {
-    translateTextNode(node, dict);
+    const trimmed = (node.nodeValue ?? '').trim();
+    if (dict[trimmed]) {
+      translateTextNode(node, dict);
+    } else if (node.parentElement) {
+      // This text node didn't match — queue its parent for element-level matching
+      untranslatedParents.add(node.parentElement);
+    }
+  }
+
+  // Phase 2: Try element-level matching for parents of unmatched text nodes
+  for (const parent of untranslatedParents) {
+    translateElement(parent, dict);
   }
 
   // Also translate placeholder attributes on inputs
@@ -157,6 +204,17 @@ function translateDOM(dict: Dictionary): void {
 }
 
 function restoreDOM(): void {
+  // Restore element-level translations (innerHTML) first
+  // Walk the DOM and check each element for saved originalHTML
+  const allElements = document.body.querySelectorAll('*');
+  allElements.forEach(el => {
+    const originalHTML = originalHTMLMap.get(el);
+    if (originalHTML !== undefined) {
+      el.innerHTML = originalHTML;
+      originalHTMLMap.delete(el);
+    }
+  });
+
   // Restore text nodes
   const nodes = collectTextNodes();
   for (const node of nodes) {
