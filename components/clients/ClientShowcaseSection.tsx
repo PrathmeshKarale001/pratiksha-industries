@@ -245,6 +245,7 @@ export default function ClientShowcaseSection({
               Spotlight: Key Enterprise Deployments
             </span>
             <span
+              className="pi-hover-hint"
               style={{
                 fontSize: '12px',
                 color: 'rgba(255, 255, 255, 0.6)',

@@ -89,6 +89,7 @@ export default function ClientDirectoryModal({
       }}
     >
       <div
+        data-clientmodal="1"
         style={{
           width: '100%',
           maxWidth: '1180px',
@@ -403,6 +404,7 @@ export default function ClientDirectoryModal({
             </div>
           ) : (
             <div
+              data-clientgrid="1"
               style={{
                 display: 'grid',
                 gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))',

@@ -46,7 +46,7 @@ input, button, select, textarea { font-family: inherit; }
 /* Anchor targets must clear the fixed navbar. */
 [id] { scroll-margin-top: calc(var(--nav-height) + 12px); }
 
-html { scrollbar-gutter: stable; }
+html { scrollbar-gutter: stable; overflow-x: clip; }
 
 /*
  * Reveal animation. Content is visible by default; the hidden state only
@@ -126,6 +126,12 @@ html, body { margin: 0; padding: 0; background: #0A3E48; }
     [data-navsheet] { display: block !important; }
     [data-mobilebar] { display: grid !important; animation: pi-bar-up 560ms cubic-bezier(0.22,1,0.36,1) 500ms both; }
     [data-mobilepad] { padding-bottom: 92px !important; }
+    /* Language switcher: show compact beside hamburger, hide desktop version */
+    [data-langmobile] { display: inline-flex !important; margin-left: auto; }
+    [data-langdesktop] { display: none !important; }
+  }
+  @media (min-width: 981px) {
+    [data-langmobile] { display: none !important; }
   }
   @media (prefers-reduced-motion: reduce) {
     [data-navscrim], [data-navpanel], [data-navitem], [data-navcontact], [data-modalcard], [data-modalscrim], [data-mobilebar] { animation: none !important; }
@@ -568,3 +574,48 @@ html, body { margin: 0; padding: 0; background: #F6F4EF; }
   [data-detailnav] > a { text-align: left !important; align-items: flex-start !important; }
   [data-heroinner] { padding: 104px 20px 34px !important; }
 }
+
+/* ── Client Showcase Section – Mobile ─────────────────────────────────── */
+@media (max-width: 640px) {
+  /* Section outer padding */
+  [data-band="clients"] { padding: 64px 0 72px !important; }
+  /* Inner wrap padding */
+  [data-band="clients"] [data-wrap] { padding: 0 16px !important; }
+  /* Marquee wrap padding */
+  [data-band="clients"] [data-wrap]:nth-child(2) { padding: 0 16px !important; }
+  /* Section heading */
+  [data-band="clients"] h2 { font-size: clamp(28px, 8vw, 40px) !important; margin-top: 16px !important; }
+}
+@media (max-width: 480px) {
+  /* "Hover to illuminate" text — irrelevant on touch */
+  [data-band="clients"] .pi-hover-hint { display: none !important; }
+}
+
+/* ── Client Directory Modal – Mobile ──────────────────────────────────── */
+@media (max-width: 640px) {
+  /* Outer scrim: no padding, aligns to bottom so it can slide up */
+  [role="dialog"][aria-label="Client Directory"] { padding: 0 !important; align-items: flex-end !important; }
+  /* Inner card: full-screen */
+  [data-clientmodal] {
+    max-width: 100% !important;
+    width: 100% !important;
+    max-height: 100vh !important;
+    height: 100dvh !important;
+    border-radius: 0 !important;
+  }
+  /* Single-column grid for client cards */
+  [data-clientgrid] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ── Navbar language switcher dropdown: keep inside viewport on mobile ── */
+@media (max-width: 640px) {
+  [data-langswitcher] > div[role="listbox"] {
+    right: 0 !important;
+    left: auto !important;
+    min-width: 170px !important;
+    max-width: calc(100vw - 32px) !important;
+  }
+}
+

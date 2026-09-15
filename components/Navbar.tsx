@@ -168,7 +168,9 @@ export default function Navbar({ mode, compact, onQuote }: Props) {
               />
               {site.certification}
             </span>
-            <LanguageSwitcher compact />
+            <div data-langdesktop="1">
+              <LanguageSwitcher compact />
+            </div>
             {onQuote ? (
               <button
                 type="button"
@@ -212,6 +214,11 @@ export default function Navbar({ mode, compact, onQuote }: Props) {
             )}
           </div>
 
+          {/* Mobile-only language switcher beside hamburger */}
+          <div data-langmobile="1" style={{ display: 'none' }}>
+            <LanguageSwitcher compact />
+          </div>
+
           <button
             type="button"
             data-navbtn="1"
@@ -221,7 +228,7 @@ export default function Navbar({ mode, compact, onQuote }: Props) {
             aria-controls="primary-menu"
             style={{
               fontFamily: 'inherit',
-              marginLeft: 'auto',
+              marginLeft: '0',
               alignItems: 'center',
               justifyContent: 'center',
               width: '54px',

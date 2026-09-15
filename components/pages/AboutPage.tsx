@@ -86,7 +86,7 @@ export default function AboutPage() {
   }, []);
 
   return (
-    <div style={{ fontFamily: "'Plus Jakarta Sans', Helvetica, sans-serif", color: '#16211F', background: '#F6F4EF' }}>
+    <div style={{ fontFamily: "'Plus Jakarta Sans', Helvetica, sans-serif", color: '#16211F', background: '#F6F4EF', overflowX: 'clip' }}>
       <a data-skip="1" href="#story">
         Skip to main content
       </a>
