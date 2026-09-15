@@ -105,105 +105,106 @@ export default function ClientDirectoryModal({
         }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Modal Header */}
-        <div
+        {/* Close button — always top-right */}
+        <button
+          type="button"
+          onClick={onClose}
+          aria-label="Close directory"
           style={{
-            padding: '28px 36px 20px',
-            borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
-            background: 'linear-gradient(180deg, #072F37 0%, #0A3E48 100%)',
+            position: 'absolute',
+            top: '16px',
+            right: '16px',
+            zIndex: 10,
+            width: '36px',
+            height: '36px',
+            borderRadius: '50%',
+            background: 'rgba(255, 255, 255, 0.1)',
+            border: '1px solid rgba(255, 255, 255, 0.18)',
+            color: '#FFFFFF',
+            fontSize: '18px',
             display: 'flex',
-            alignItems: 'flex-start',
-            justifyContent: 'space-between',
-            gap: '24px',
-            flexWrap: 'wrap',
+            alignItems: 'center',
+            justifyContent: 'center',
+            cursor: 'pointer',
+            transition: 'all 200ms ease',
+            flexShrink: 0,
+          }}
+          onMouseEnter={(e) => {
+            e.currentTarget.style.background = 'rgba(240, 222, 156, 0.25)';
+            e.currentTarget.style.transform = 'scale(1.08)';
+          }}
+          onMouseLeave={(e) => {
+            e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
+            e.currentTarget.style.transform = 'scale(1)';
           }}
         >
-          <div>
-            <div
-              style={{
-                display: 'inline-flex',
-                alignItems: 'center',
-                gap: '8px',
-                background: 'rgba(240, 222, 156, 0.12)',
-                border: '1px solid rgba(240, 222, 156, 0.28)',
-                padding: '5px 12px',
-                borderRadius: '999px',
-                fontSize: '11px',
-                fontWeight: '700',
-                letterSpacing: '0.14em',
-                color: '#F0DE9C',
-                textTransform: 'uppercase',
-                marginBottom: '10px',
-              }}
-            >
-              <span
-                style={{
-                  width: '6px',
-                  height: '6px',
-                  borderRadius: '50%',
-                  background: '#F0DE9C',
-                }}
-              />
-              Enterprise Client Directory (40 Partners)
-            </div>
-            <h2
-              style={{
-                margin: 0,
-                fontSize: 'clamp(24px, 3vw, 34px)',
-                fontWeight: '700',
-                letterSpacing: '-0.03em',
-                color: '#FFFFFF',
-              }}
-            >
-              Supplying Industry Leaders Across 3 Countries
-            </h2>
-            <p
-              style={{
-                margin: '6px 0 0',
-                fontSize: '14px',
-                color: 'rgba(255, 255, 255, 0.72)',
-                maxWidth: '640px',
-                lineHeight: '1.5',
-              }}
-            >
-              From automotive assembly plants to sugar mills, thermal power blocks, and refineries — explore the full spectrum of industrial organizations that rely on Pratiksha Industries.
-            </p>
-          </div>
+          &times;
+        </button>
 
-          <button
-            type="button"
-            onClick={onClose}
-            aria-label="Close directory"
+        {/* Modal Header */}
+        <div
+          data-clientmodal-head="1"
+          style={{
+            padding: '28px 36px 20px',
+            paddingRight: '64px',
+            borderBottom: '1px solid rgba(255, 255, 255, 0.1)',
+            background: 'linear-gradient(180deg, #072F37 0%, #0A3E48 100%)',
+          }}
+        >
+          <div
             style={{
-              width: '42px',
-              height: '42px',
-              borderRadius: '50%',
-              background: 'rgba(255, 255, 255, 0.1)',
-              border: '1px solid rgba(255, 255, 255, 0.18)',
-              color: '#FFFFFF',
-              fontSize: '20px',
-              display: 'flex',
+              display: 'inline-flex',
               alignItems: 'center',
-              justifyContent: 'center',
-              cursor: 'pointer',
-              transition: 'all 200ms ease',
-              flexShrink: 0,
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = 'rgba(240, 222, 156, 0.25)';
-              e.currentTarget.style.transform = 'scale(1.08)';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = 'rgba(255, 255, 255, 0.1)';
-              e.currentTarget.style.transform = 'scale(1)';
+              gap: '8px',
+              background: 'rgba(240, 222, 156, 0.12)',
+              border: '1px solid rgba(240, 222, 156, 0.28)',
+              padding: '5px 12px',
+              borderRadius: '999px',
+              fontSize: '11px',
+              fontWeight: '700',
+              letterSpacing: '0.14em',
+              color: '#F0DE9C',
+              textTransform: 'uppercase',
+              marginBottom: '10px',
             }}
           >
-            &times;
-          </button>
+            <span
+              style={{
+                width: '6px',
+                height: '6px',
+                borderRadius: '50%',
+                background: '#F0DE9C',
+              }}
+            />
+            Enterprise Client Directory (40 Partners)
+          </div>
+          <h2
+            style={{
+              margin: 0,
+              fontSize: 'clamp(24px, 3vw, 34px)',
+              fontWeight: '700',
+              letterSpacing: '-0.03em',
+              color: '#FFFFFF',
+            }}
+          >
+            Supplying Industry Leaders Across 3 Countries
+          </h2>
+          <p
+            style={{
+              margin: '6px 0 0',
+              fontSize: '14px',
+              color: 'rgba(255, 255, 255, 0.72)',
+              maxWidth: '640px',
+              lineHeight: '1.5',
+            }}
+          >
+            From automotive assembly plants to sugar mills, thermal power blocks, and refineries — explore the full spectrum of industrial organizations that rely on Pratiksha Industries.
+          </p>
         </div>
 
         {/* Filter & Search Bar */}
         <div
+          data-clientmodal-filter="1"
           style={{
             padding: '18px 36px',
             background: 'rgba(4, 26, 32, 0.45)',
@@ -324,6 +325,7 @@ export default function ClientDirectoryModal({
 
         {/* Clients Grid Body */}
         <div
+          data-clientmodal-body="1"
           style={{
             flex: 1,
             overflowY: 'auto',
@@ -448,6 +450,7 @@ export default function ClientDirectoryModal({
                     {/* Country Badge */}
                     {isInternational && (
                       <div
+                        data-client-country="1"
                         style={{
                           position: 'absolute',
                           top: '10px',
@@ -473,6 +476,7 @@ export default function ClientDirectoryModal({
 
                     {/* Logo Section: Crisp white container */}
                     <div
+                      data-clientlogo-box="1"
                       style={{
                         height: '66px',
                         display: 'flex',
@@ -491,6 +495,7 @@ export default function ClientDirectoryModal({
                     {/* Details */}
                     <div>
                       <div
+                        data-client-name="1"
                         style={{
                           fontSize: '14.5px',
                           fontWeight: '700',
@@ -502,6 +507,7 @@ export default function ClientDirectoryModal({
                         {client.name}
                       </div>
                       <div
+                        data-client-legal="1"
                         style={{
                           fontSize: '11px',
                           color: 'rgba(255, 255, 255, 0.55)',
@@ -513,6 +519,7 @@ export default function ClientDirectoryModal({
                       </div>
 
                       <div
+                        data-client-cat="1"
                         style={{
                           display: 'flex',
                           alignItems: 'center',
@@ -536,6 +543,7 @@ export default function ClientDirectoryModal({
 
                       {client.highlight && (
                         <div
+                          data-client-highlight="1"
                           style={{
                             marginTop: '6px',
                             fontSize: '11.5px',
@@ -556,6 +564,7 @@ export default function ClientDirectoryModal({
 
         {/* Modal Footer with Direct Inquiry CTA */}
         <div
+          data-clientmodal-foot="1"
           style={{
             padding: '18px 36px',
             background: 'linear-gradient(180deg, #0A3E48 0%, #062329 100%)',

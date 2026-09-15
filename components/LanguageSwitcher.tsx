@@ -1,15 +1,19 @@
 'use client';
 
 /*
- * LanguageSwitcher — cross-browser i18n widget for Pratiksha Industries.
+ * LanguageSwitcher — Pre-translated static dictionary approach.
  *
- * Translation strategy:
- *  - Chrome / Edge / Firefox → Google Translate Element API (native widget, seamless)
- *  - Safari / all others     → /api/translate proxy (server-side GTX call, no CORS)
+ * How it works:
+ *  1. All translations are pre-built at build time in /public/locales/{lang}.json
+ *  2. On language change, fetch the JSON (tiny, cached by browser forever)
+ *  3. Walk the DOM and swap text nodes using dictionary lookup (~5ms)
+ *  4. MutationObserver catches dynamic content (modals, route changes)
  *
- * The /api/translate route calls translate.googleapis.com from the Next.js server,
- * completely bypassing Safari's ITP and all browser CORS restrictions.
- * Result: consistent multi-language experience on every browser and device.
+ * Result:
+ *  - Instant translation (< 50ms, zero API calls at runtime)
+ *  - All browsers work identically (no Google widget, no CORS, no Safari issues)
+ *  - Cached by browser after first load
+ *  - Arabic RTL handled automatically
  */
 
 import React, { useState, useRef, useCallback, useEffect } from 'react';
@@ -26,185 +30,240 @@ const languages = [
 ] as const;
 
 type LangCode = (typeof languages)[number]['code'];
+type Dictionary = Record<string, string>;
 
-// ─── Detect Safari ──────────────────────────────────────────────────────────
-function isSafariBrowser(): boolean {
-  if (typeof navigator === 'undefined') return false;
-  const ua = navigator.userAgent;
-  return /^((?!chrome|android).)*safari/i.test(ua);
+// ─── Translation Engine ──────────────────────────────────────────────────────
+
+// Cache loaded dictionaries in memory
+const dictionaryCache = new Map<string, Dictionary>();
+
+// Store original English text for every translated node
+const originalTextMap = new WeakMap<Text, string>();
+
+// Current language state (shared across all instances)
+let currentLang: LangCode = 'en';
+let currentDict: Dictionary | null = null;
+let observer: MutationObserver | null = null;
+let isTranslating = false;
+
+const SKIP_TAGS = new Set([
+  'script', 'style', 'noscript', 'code', 'pre',
+  'input', 'textarea', 'select', 'svg', 'math',
+]);
+
+async function loadDictionary(lang: LangCode): Promise<Dictionary> {
+  if (lang === 'en') return {};
+
+  const cached = dictionaryCache.get(lang);
+  if (cached) return cached;
+
+  try {
+    const res = await fetch(`/locales/${lang}.json`, {
+      cache: 'force-cache',
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const dict: Dictionary = await res.json();
+    dictionaryCache.set(lang, dict);
+    return dict;
+  } catch (err) {
+    console.warn(`[i18n] Failed to load ${lang}.json:`, err);
+    return {};
+  }
 }
 
-// ─── DOM text-node helpers ────────────────────────────────────────────────────
-// Stores originals so we can fully restore on switch back to English
-const originals = new Map<Text, string>();
+function translateTextNode(node: Text, dict: Dictionary): void {
+  const original = originalTextMap.get(node) ?? node.nodeValue ?? '';
+  if (!original.trim()) return;
 
-function collectTextNodes(): Text[] {
-  const skipTags = new Set([
-    'script', 'style', 'noscript', 'code', 'pre',
-    'input', 'textarea', 'select', 'button',
-  ]);
+  // Save original if not already saved
+  if (!originalTextMap.has(node)) {
+    originalTextMap.set(node, original);
+  }
 
-  const walker = document.createTreeWalker(
-    document.body,
-    NodeFilter.SHOW_TEXT,
-    {
-      acceptNode(node) {
-        const parent = node.parentElement;
-        if (!parent) return NodeFilter.FILTER_REJECT;
-        if (skipTags.has(parent.tagName.toLowerCase())) return NodeFilter.FILTER_REJECT;
-        if (!node.nodeValue?.trim()) return NodeFilter.FILTER_REJECT;
-        // Skip anything inside the language switcher widget itself
-        if (parent.closest('[data-langswitcher]')) return NodeFilter.FILTER_REJECT;
-        // Skip hidden elements
-        const style = window.getComputedStyle(parent);
-        if (style.display === 'none' || style.visibility === 'hidden') return NodeFilter.FILTER_REJECT;
-        return NodeFilter.FILTER_ACCEPT;
-      },
-    }
-  );
+  // Look up the trimmed text in dictionary
+  const trimmed = original.trim();
+  const translated = dict[trimmed];
 
+  if (translated && translated !== trimmed) {
+    // Preserve leading/trailing whitespace from original
+    const leadingSpace = original.match(/^\s*/)?.[0] ?? '';
+    const trailingSpace = original.match(/\s*$/)?.[0] ?? '';
+    node.nodeValue = leadingSpace + translated + trailingSpace;
+  }
+}
+
+function restoreTextNode(node: Text): void {
+  const original = originalTextMap.get(node);
+  if (original !== undefined && node.isConnected) {
+    node.nodeValue = original;
+  }
+}
+
+function collectTextNodes(root: Node = document.body): Text[] {
   const nodes: Text[] = [];
-  let n;
+  const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT, {
+    acceptNode(node) {
+      const parent = node.parentElement;
+      if (!parent) return NodeFilter.FILTER_REJECT;
+      if (SKIP_TAGS.has(parent.tagName.toLowerCase())) return NodeFilter.FILTER_REJECT;
+      if (parent.closest('[data-langswitcher]')) return NodeFilter.FILTER_REJECT;
+      if (parent.isContentEditable) return NodeFilter.FILTER_REJECT;
+      if (!node.nodeValue?.trim()) return NodeFilter.FILTER_REJECT;
+      return NodeFilter.FILTER_ACCEPT;
+    },
+  });
+  let n: Node | null;
   while ((n = walker.nextNode())) nodes.push(n as Text);
   return nodes;
 }
 
-// ─── Proxy-based translation (all browsers in Safari mode) ───────────────────
-const translationCache = new Map<string, string>();
+function translateDOM(dict: Dictionary): void {
+  if (isTranslating) return;
+  isTranslating = true;
 
-async function translateBatch(texts: string[], lang: string): Promise<string[]> {
-  // Deduplicate for efficiency
-  const unique = [...new Set(texts)];
-  const toFetch = unique.filter((t) => !translationCache.has(`${lang}::${t}`));
-
-  if (toFetch.length > 0) {
-    // Chunk into groups of 50 to avoid oversized requests
-    const chunkSize = 50;
-    for (let i = 0; i < toFetch.length; i += chunkSize) {
-      const chunk = toFetch.slice(i, i + chunkSize);
-      try {
-        const res = await fetch('/api/translate', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ texts: chunk, lang }),
-        });
-        if (res.ok) {
-          const data = await res.json() as { translated: string[] };
-          chunk.forEach((text, idx) => {
-            translationCache.set(`${lang}::${text}`, data.translated[idx] ?? text);
-          });
-        }
-      } catch {
-        // Silently fall back to original on network error
-      }
-    }
+  const nodes = collectTextNodes();
+  for (const node of nodes) {
+    translateTextNode(node, dict);
   }
 
-  return texts.map((t) => translationCache.get(`${lang}::${t}`) ?? t);
+  // Also translate placeholder attributes on inputs
+  document.querySelectorAll<HTMLInputElement>('input[placeholder], textarea[placeholder]').forEach(el => {
+    const original = el.dataset.originalPlaceholder ?? el.placeholder;
+    if (!el.dataset.originalPlaceholder) {
+      el.dataset.originalPlaceholder = original;
+    }
+    const translated = dict[original.trim()];
+    if (translated) el.placeholder = translated;
+  });
+
+  // Also translate title/alt attributes on images
+  document.querySelectorAll<HTMLElement>('[title], [alt]').forEach(el => {
+    if (el.closest('[data-langswitcher]')) return;
+    const titleAttr = el.getAttribute('title');
+    const altAttr = el.getAttribute('alt');
+    if (titleAttr) {
+      if (!el.dataset.originalTitle) el.dataset.originalTitle = titleAttr;
+      const t = dict[(el.dataset.originalTitle ?? titleAttr).trim()];
+      if (t) el.setAttribute('title', t);
+    }
+    if (altAttr) {
+      if (!el.dataset.originalAlt) el.dataset.originalAlt = altAttr;
+      const t = dict[(el.dataset.originalAlt ?? altAttr).trim()];
+      if (t) el.setAttribute('alt', t);
+    }
+  });
+
+  isTranslating = false;
 }
 
-async function applyTranslation(lang: string): Promise<void> {
+function restoreDOM(): void {
+  // Restore text nodes
   const nodes = collectTextNodes();
+  for (const node of nodes) {
+    restoreTextNode(node);
+  }
 
-  // Save originals before first translation
-  nodes.forEach((node) => {
-    if (!originals.has(node)) originals.set(node, node.nodeValue ?? '');
+  // Restore placeholders
+  document.querySelectorAll<HTMLInputElement>('[data-original-placeholder]').forEach(el => {
+    el.placeholder = el.dataset.originalPlaceholder ?? el.placeholder;
+    delete el.dataset.originalPlaceholder;
   });
 
-  const texts = nodes.map((n) => originals.get(n) ?? n.nodeValue ?? '');
-  const translated = await translateBatch(texts, lang);
-
-  nodes.forEach((node, i) => {
-    if (node.isConnected) node.nodeValue = translated[i];
+  // Restore title/alt
+  document.querySelectorAll<HTMLElement>('[data-original-title], [data-original-alt]').forEach(el => {
+    if (el.dataset.originalTitle) {
+      el.setAttribute('title', el.dataset.originalTitle);
+      delete el.dataset.originalTitle;
+    }
+    if (el.dataset.originalAlt) {
+      el.setAttribute('alt', el.dataset.originalAlt);
+      delete el.dataset.originalAlt;
+    }
   });
 }
 
-function restoreOriginal(): void {
-  originals.forEach((original, node) => {
-    if (node.isConnected) node.nodeValue = original;
-  });
-  originals.clear();
-}
+function setupMutationObserver(dict: Dictionary): void {
+  // Disconnect previous observer
+  observer?.disconnect();
 
-// ─── Google Translate Element (Chrome/Edge/Firefox) ──────────────────────────
-function useGoogleTranslate() {
-  const readyRef = useRef(false);
+  observer = new MutationObserver((mutations) => {
+    if (isTranslating || currentLang === 'en') return;
 
-  useEffect(() => {
-    if (readyRef.current) return;
-    readyRef.current = true;
-
-    const container = document.createElement('div');
-    container.id = 'google_translate_element';
-    container.style.display = 'none';
-    document.body.appendChild(container);
-
-    (window as unknown as Record<string, unknown>).googleTranslateElementInit = () => {
-      // @ts-expect-error google.translate is loaded dynamically
-      new google.translate.TranslateElement(
-        { pageLanguage: 'en', autoDisplay: false },
-        'google_translate_element'
-      );
-    };
-
-    const script = document.createElement('script');
-    script.src =
-      '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit';
-    script.async = true;
-    document.body.appendChild(script);
-  }, []);
-
-  const translate = useCallback((langCode: LangCode) => {
-    if (langCode === 'en') {
-      const iframe = document.querySelector<HTMLIFrameElement>('.goog-te-banner-frame');
-      if (iframe) {
-        const btn = iframe.contentDocument?.querySelector<HTMLButtonElement>('.goog-close-link');
-        btn?.click();
+    for (const mutation of mutations) {
+      for (const added of mutation.addedNodes) {
+        if (added.nodeType === Node.TEXT_NODE) {
+          translateTextNode(added as Text, dict);
+        } else if (added.nodeType === Node.ELEMENT_NODE) {
+          // New element added (modal opened, section loaded, etc.)
+          const nodes = collectTextNodes(added);
+          for (const node of nodes) {
+            translateTextNode(node, dict);
+          }
+        }
       }
-      document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
-      document.cookie =
-        'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.' +
-        window.location.hostname;
-      window.location.reload();
-      return;
     }
-    document.cookie = `googtrans=/en/${langCode}; path=/;`;
-    document.cookie = `googtrans=/en/${langCode}; path=/; domain=.${window.location.hostname};`;
-    const select = document.querySelector<HTMLSelectElement>('.goog-te-combo');
-    if (select) {
-      select.value = langCode;
-      select.dispatchEvent(new Event('change'));
-    } else {
-      window.location.reload();
-    }
-  }, []);
+  });
 
-  return translate;
+  observer.observe(document.body, {
+    childList: true,
+    subtree: true,
+  });
+}
+
+// ─── Public API ──────────────────────────────────────────────────────────────
+
+async function switchLanguage(lang: LangCode): Promise<void> {
+  if (lang === currentLang) return;
+
+  // Always restore to English first
+  if (currentLang !== 'en') {
+    restoreDOM();
+    observer?.disconnect();
+    observer = null;
+  }
+
+  currentLang = lang;
+
+  // Handle Arabic RTL
+  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  document.documentElement.lang = lang;
+
+  if (lang === 'en') {
+    currentDict = null;
+    localStorage.setItem('pi-lang', 'en');
+    return;
+  }
+
+  const dict = await loadDictionary(lang);
+  currentDict = dict;
+
+  if (Object.keys(dict).length > 0) {
+    translateDOM(dict);
+    setupMutationObserver(dict);
+  }
+
+  localStorage.setItem('pi-lang', lang);
 }
 
 // ─── Component ────────────────────────────────────────────────────────────────
+
 interface LanguageSwitcherProps {
   compact?: boolean;
 }
 
 export default function LanguageSwitcher({ compact }: LanguageSwitcherProps) {
   const [open, setOpen] = useState(false);
-  const [current, setCurrent] = useState<LangCode>('en');
+  const [activeLang, setActiveLang] = useState<LangCode>('en');
   const [loading, setLoading] = useState(false);
   const dropRef = useRef<HTMLDivElement>(null);
-  const googleTranslate = useGoogleTranslate();
-  const useSafariMode = useRef<boolean>(false);
 
-  // Detect Safari on client mount
+  // Restore saved language on mount
   useEffect(() => {
-    useSafariMode.current = isSafariBrowser();
-    if (!useSafariMode.current) {
-      // Read cookie state for Google Translate
-      const match = document.cookie.match(/googtrans=\/en\/(\w+)/);
-      if (match?.[1]) {
-        const found = languages.find((l) => l.code === match[1]);
-        if (found) setCurrent(found.code);
-      }
+    const saved = localStorage.getItem('pi-lang') as LangCode | null;
+    if (saved && saved !== 'en' && languages.some(l => l.code === saved)) {
+      setActiveLang(saved);
+      // Auto-translate on page load
+      switchLanguage(saved);
     }
   }, []);
 
@@ -223,40 +282,25 @@ export default function LanguageSwitcher({ compact }: LanguageSwitcherProps) {
   // Close on Escape
   useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setOpen(false);
-    };
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setOpen(false); };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [open]);
 
-  const handleSelect = useCallback(
-    async (code: LangCode) => {
-      if (code === current) { setOpen(false); return; }
-      setCurrent(code);
-      setOpen(false);
+  const handleSelect = useCallback(async (code: LangCode) => {
+    if (code === activeLang) { setOpen(false); return; }
+    setOpen(false);
+    setLoading(true);
 
-      if (useSafariMode.current) {
-        // Safari path: /api/translate proxy
-        if (code === 'en') {
-          restoreOriginal();
-        } else {
-          setLoading(true);
-          try {
-            await applyTranslation(code);
-          } finally {
-            setLoading(false);
-          }
-        }
-      } else {
-        // Chrome/Edge/Firefox path: Google Translate Element
-        googleTranslate(code);
-      }
-    },
-    [current, googleTranslate]
-  );
+    try {
+      await switchLanguage(code);
+      setActiveLang(code);
+    } finally {
+      setLoading(false);
+    }
+  }, [activeLang]);
 
-  const currentLang = languages.find((l) => l.code === current) ?? languages[0];
+  const currentLangObj = languages.find(l => l.code === activeLang) ?? languages[0];
 
   return (
     <div
@@ -267,8 +311,8 @@ export default function LanguageSwitcher({ compact }: LanguageSwitcherProps) {
       {/* Trigger */}
       <button
         type="button"
-        onClick={() => setOpen((o) => !o)}
-        aria-label={`Language: ${currentLang.name}. Click to change.`}
+        onClick={() => setOpen(o => !o)}
+        aria-label={`Language: ${currentLangObj.name}. Click to change.`}
         aria-expanded={open}
         aria-haspopup="listbox"
         disabled={loading}
@@ -291,18 +335,13 @@ export default function LanguageSwitcher({ compact }: LanguageSwitcherProps) {
         }}
       >
         <span style={{ fontSize: '15px', lineHeight: 1 }}>
-          {loading ? '⏳' : currentLang.flag}
+          {loading ? '⏳' : currentLangObj.flag}
         </span>
-        <span>{currentLang.label}</span>
+        <span>{currentLangObj.label}</span>
         <svg
-          width="10"
-          height="6"
-          viewBox="0 0 10 6"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="1.6"
-          strokeLinecap="round"
-          strokeLinejoin="round"
+          width="10" height="6" viewBox="0 0 10 6" fill="none"
+          stroke="currentColor" strokeWidth="1.6"
+          strokeLinecap="round" strokeLinejoin="round"
           style={{
             transform: open ? 'rotate(180deg)' : 'none',
             transition: 'transform 240ms ease',
@@ -331,8 +370,8 @@ export default function LanguageSwitcher({ compact }: LanguageSwitcherProps) {
             animation: 'pi-lang-in 220ms cubic-bezier(0.22, 1, 0.36, 1) both',
           }}
         >
-          {languages.map((lang) => {
-            const active = lang.code === current;
+          {languages.map(lang => {
+            const active = lang.code === activeLang;
             return (
               <button
                 key={lang.code}
@@ -356,38 +395,22 @@ export default function LanguageSwitcher({ compact }: LanguageSwitcherProps) {
                   background: active ? 'rgba(240, 222, 156, 0.22)' : 'transparent',
                   transition: 'background 180ms, color 180ms',
                 }}
-                onMouseEnter={(e) => {
-                  if (!active) e.currentTarget.style.background = 'rgba(10, 62, 72, 0.05)';
-                }}
-                onMouseLeave={(e) => {
-                  if (!active) e.currentTarget.style.background = 'transparent';
-                }}
+                onMouseEnter={e => { if (!active) e.currentTarget.style.background = 'rgba(10, 62, 72, 0.05)'; }}
+                onMouseLeave={e => { if (!active) e.currentTarget.style.background = 'transparent'; }}
               >
                 <span style={{ fontSize: '17px', lineHeight: 1 }}>{lang.flag}</span>
-                <span style={{ flex: 1, textAlign: 'left' }}>
-                  {lang.name}
-                </span>
-                <span
-                  style={{
-                    fontFamily: "'IBM Plex Mono', monospace",
-                    fontSize: '11px',
-                    letterSpacing: '0.06em',
-                    color: active ? '#8A6A1F' : '#8AA7AC',
-                  }}
-                >
+                <span style={{ flex: 1, textAlign: 'left' }}>{lang.name}</span>
+                <span style={{
+                  fontFamily: "'IBM Plex Mono', monospace",
+                  fontSize: '11px',
+                  letterSpacing: '0.06em',
+                  color: active ? '#8A6A1F' : '#8AA7AC',
+                }}>
                   {lang.label}
                 </span>
                 {active && (
-                  <svg
-                    width="14"
-                    height="14"
-                    viewBox="0 0 16 16"
-                    fill="none"
-                    stroke="#8A6A1F"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
+                  <svg width="14" height="14" viewBox="0 0 16 16" fill="none"
+                    stroke="#8A6A1F" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M3 8.5l3 3 7-7" />
                   </svg>
                 )}

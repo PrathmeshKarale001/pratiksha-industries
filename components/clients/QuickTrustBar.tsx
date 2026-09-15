@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { trustBarClients } from '@/content/clients';
+import { marqueeRow1, marqueeRow2 } from '@/content/clients';
 import ClientLogo from './ClientLogo';
 
 interface QuickTrustBarProps {
@@ -9,11 +9,13 @@ interface QuickTrustBarProps {
 }
 
 export default function QuickTrustBar({ onOpenDirectory }: QuickTrustBarProps) {
-  // Duplicate for seamless infinite loop
-  const marqueeItems = [...trustBarClients, ...trustBarClients];
+  // Duplicate each row for seamless infinite loop
+  const loopRow1 = [...marqueeRow1, ...marqueeRow1];
+  const loopRow2 = [...marqueeRow2, ...marqueeRow2];
 
   return (
     <div
+      data-trustbar="1"
       style={{
         position: 'relative',
         width: '100%',
@@ -22,6 +24,7 @@ export default function QuickTrustBar({ onOpenDirectory }: QuickTrustBarProps) {
       }}
     >
       <div
+        data-trustbar-inner="1"
         style={{
           background: 'linear-gradient(180deg, #062B32 0%, #0A3E48 100%)',
           borderRadius: '18px',
@@ -34,6 +37,7 @@ export default function QuickTrustBar({ onOpenDirectory }: QuickTrustBarProps) {
       >
         {/* Header Ribbon / Label */}
         <div
+          data-trustbar-head="1"
           style={{
             display: 'flex',
             alignItems: 'center',
@@ -117,6 +121,7 @@ export default function QuickTrustBar({ onOpenDirectory }: QuickTrustBarProps) {
 
         {/* Gradient edge masks for smooth fade */}
         <div
+          data-trustbar-fade="1"
           style={{
             position: 'absolute',
             left: 0,
@@ -129,6 +134,7 @@ export default function QuickTrustBar({ onOpenDirectory }: QuickTrustBarProps) {
           }}
         />
         <div
+          data-trustbar-fade="1"
           style={{
             position: 'absolute',
             right: 0,
@@ -141,7 +147,7 @@ export default function QuickTrustBar({ onOpenDirectory }: QuickTrustBarProps) {
           }}
         />
 
-        {/* Scrolling Ticker Track */}
+        {/* Row 1: Scroll Left */}
         <div
           style={{
             overflow: 'hidden',
@@ -152,12 +158,12 @@ export default function QuickTrustBar({ onOpenDirectory }: QuickTrustBarProps) {
           onClick={onOpenDirectory}
         >
           <div
-            className="quick-trust-ticker"
+            data-trustbar-ticker="1"
             style={{
               display: 'flex',
               alignItems: 'center',
               width: 'max-content',
-              animation: 'pi-trust-marquee 38s linear infinite',
+              animation: 'pi-trust-marquee-left 48s linear infinite',
               gap: '16px',
               paddingLeft: '16px',
             }}
@@ -168,9 +174,71 @@ export default function QuickTrustBar({ onOpenDirectory }: QuickTrustBarProps) {
               e.currentTarget.style.animationPlayState = 'running';
             }}
           >
-            {marqueeItems.map((client, idx) => (
+            {loopRow1.map((client, idx) => (
               <div
-                key={`${client.id}-${idx}`}
+                key={`r1-${client.id}-${idx}`}
+                style={{
+                  flexShrink: 0,
+                  background: '#FFFFFF',
+                  borderRadius: '12px',
+                  border: '1px solid rgba(240, 222, 156, 0.45)',
+                  padding: '8px 18px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  height: '56px',
+                  minWidth: '150px',
+                  boxShadow: '0 4px 14px rgba(0, 0, 0, 0.18)',
+                  transition: 'all 240ms ease',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.transform = 'translateY(-2px) scale(1.04)';
+                  e.currentTarget.style.borderColor = '#C4A24F';
+                  e.currentTarget.style.boxShadow =
+                    '0 8px 22px rgba(0,0,0,0.3), 0 0 16px rgba(240,222,156,0.35)';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
+                  e.currentTarget.style.borderColor = 'rgba(240, 222, 156, 0.45)';
+                  e.currentTarget.style.boxShadow = '0 4px 14px rgba(0, 0, 0, 0.18)';
+                }}
+              >
+                <ClientLogo client={client} height={38} maxWidth={130} />
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Row 2: Scroll Right (opposite direction) */}
+        <div
+          style={{
+            overflow: 'hidden',
+            width: '100%',
+            paddingTop: '12px',
+            cursor: 'pointer',
+          }}
+          onClick={onOpenDirectory}
+        >
+          <div
+            data-trustbar-ticker="1"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              width: 'max-content',
+              animation: 'pi-trust-marquee-right 52s linear infinite',
+              gap: '16px',
+              paddingLeft: '16px',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.animationPlayState = 'paused';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.animationPlayState = 'running';
+            }}
+          >
+            {loopRow2.map((client, idx) => (
+              <div
+                key={`r2-${client.id}-${idx}`}
                 style={{
                   flexShrink: 0,
                   background: '#FFFFFF',
@@ -205,12 +273,20 @@ export default function QuickTrustBar({ onOpenDirectory }: QuickTrustBarProps) {
       </div>
 
       <style jsx>{`
-        @keyframes pi-trust-marquee {
+        @keyframes pi-trust-marquee-left {
           0% {
             transform: translateX(0%);
           }
           100% {
             transform: translateX(-50%);
+          }
+        }
+        @keyframes pi-trust-marquee-right {
+          0% {
+            transform: translateX(-50%);
+          }
+          100% {
+            transform: translateX(0%);
           }
         }
         @keyframes pi-pulse {

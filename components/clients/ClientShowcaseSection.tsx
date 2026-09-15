@@ -1,7 +1,7 @@
 'use client';
 
 import React from 'react';
-import { marqueeRow1, marqueeRow2, clients } from '@/content/clients';
+import { clients } from '@/content/clients';
 import ClientLogo from './ClientLogo';
 
 interface ClientShowcaseSectionProps {
@@ -14,11 +14,8 @@ export default function ClientShowcaseSection({
   onOpenQuoteRefs,
 }: ClientShowcaseSectionProps) {
   // Top 8 featured titans for the spotlight card grid
-  const featuredTitans = clients.filter((c) => c.tier === 'featured').slice(0, 8);
+  const featuredTitans = clients.filter((c) => c.tier === 'featured').slice(0, 10);
 
-  // Duplicated sets for infinite smooth loop
-  const loopRow1 = [...marqueeRow1, ...marqueeRow1];
-  const loopRow2 = [...marqueeRow2, ...marqueeRow2];
 
   return (
     <section
@@ -372,187 +369,7 @@ export default function ClientShowcaseSection({
         </div>
       </div>
 
-      {/* DUAL VELOCITY MARQUEE BANDS (Concept B) */}
-      <div
-        style={{
-          marginTop: '68px',
-          display: 'flex',
-          flexDirection: 'column',
-          gap: '16px',
-          position: 'relative',
-        }}
-      >
-        {/* Subtle Section Divider */}
-        <div
-          style={{
-            maxWidth: '1492px',
-            margin: '0 auto 12px',
-            padding: '0 32px',
-            width: '100%',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
-          }}
-        >
-          <span
-            style={{
-              fontFamily: "'IBM Plex Mono', monospace",
-              fontSize: '11px',
-              fontWeight: '700',
-              letterSpacing: '0.16em',
-              color: 'rgba(255, 255, 255, 0.65)',
-              textTransform: 'uppercase',
-            }}
-          >
-            Continuous Marquee Ribbon &bull; 40 Enterprise Partners
-          </span>
-          <span
-            style={{
-              fontSize: '11.5px',
-              color: '#F0DE9C',
-              fontWeight: '600',
-            }}
-          >
-            Dual Track Flow &rarr;
-          </span>
-        </div>
 
-        {/* Gradient edge masks for smooth fade */}
-        <div
-          style={{
-            position: 'absolute',
-            left: 0,
-            top: 0,
-            bottom: 0,
-            width: '120px',
-            background: 'linear-gradient(90deg, #072B32 0%, transparent 100%)',
-            zIndex: 3,
-            pointerEvents: 'none',
-          }}
-        />
-        <div
-          style={{
-            position: 'absolute',
-            right: 0,
-            top: 0,
-            bottom: 0,
-            width: '120px',
-            background: 'linear-gradient(270deg, #072B32 0%, transparent 100%)',
-            zIndex: 3,
-            pointerEvents: 'none',
-          }}
-        />
-
-        {/* Row 1: Leftward Scroll */}
-        <div
-          style={{ overflow: 'hidden', width: '100%', cursor: 'pointer' }}
-          onClick={onOpenDirectory}
-        >
-          <div
-            className="marquee-track-left"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              width: 'max-content',
-              animation: 'pi-marquee-left 52s linear infinite',
-              gap: '16px',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.animationPlayState = 'paused';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.animationPlayState = 'running';
-            }}
-          >
-            {loopRow1.map((client, i) => (
-              <div
-                key={`r1-${client.id}-${i}`}
-                style={{
-                  background: '#FFFFFF',
-                  border: '1px solid rgba(240, 222, 156, 0.4)',
-                  borderRadius: '14px',
-                  padding: '10px 22px',
-                  minWidth: '200px',
-                  height: '66px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  boxShadow: '0 4px 14px rgba(0, 0, 0, 0.18)',
-                  transition: 'all 240ms ease',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-2px) scale(1.04)';
-                  e.currentTarget.style.borderColor = '#F0DE9C';
-                  e.currentTarget.style.boxShadow =
-                    '0 8px 20px rgba(0,0,0,0.3), 0 0 14px rgba(240,222,156,0.35)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                  e.currentTarget.style.borderColor = 'rgba(240, 222, 156, 0.4)';
-                  e.currentTarget.style.boxShadow = '0 4px 14px rgba(0, 0, 0, 0.18)';
-                }}
-              >
-                <ClientLogo client={client} height={42} maxWidth={160} />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Row 2: Rightward Scroll */}
-        <div
-          style={{ overflow: 'hidden', width: '100%', cursor: 'pointer' }}
-          onClick={onOpenDirectory}
-        >
-          <div
-            className="marquee-track-right"
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              width: 'max-content',
-              animation: 'pi-marquee-right 56s linear infinite',
-              gap: '16px',
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.animationPlayState = 'paused';
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.animationPlayState = 'running';
-            }}
-          >
-            {loopRow2.map((client, i) => (
-              <div
-                key={`r2-${client.id}-${i}`}
-                style={{
-                  background: '#FFFFFF',
-                  border: '1px solid rgba(240, 222, 156, 0.4)',
-                  borderRadius: '14px',
-                  padding: '10px 22px',
-                  minWidth: '200px',
-                  height: '66px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  boxShadow: '0 4px 14px rgba(0, 0, 0, 0.18)',
-                  transition: 'all 240ms ease',
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.transform = 'translateY(-2px) scale(1.04)';
-                  e.currentTarget.style.borderColor = '#F0DE9C';
-                  e.currentTarget.style.boxShadow =
-                    '0 8px 20px rgba(0,0,0,0.3), 0 0 14px rgba(240,222,156,0.35)';
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.transform = 'translateY(0) scale(1)';
-                  e.currentTarget.style.borderColor = 'rgba(240, 222, 156, 0.4)';
-                  e.currentTarget.style.boxShadow = '0 4px 14px rgba(0, 0, 0, 0.18)';
-                }}
-              >
-                <ClientLogo client={client} height={42} maxWidth={160} />
-              </div>
-            ))}
-          </div>
-        </div>
-      </div>
 
       {/* Action Center / CTA Bar */}
       <div
