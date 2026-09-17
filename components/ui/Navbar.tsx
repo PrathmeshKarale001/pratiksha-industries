@@ -15,6 +15,7 @@ export function Navbar() {
   const pillRef = useRef<HTMLDivElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [closing, setClosing] = useState(false);
+  const menuOpenRef = useRef(false);
 
   /* ── glass / solid mode + compress on scroll ───────────────────────── */
   useEffect(() => {
@@ -40,9 +41,12 @@ export function Navbar() {
       pill.style.boxShadow = scrolled
         ? '0 16px 38px rgba(4,30,37,0.2)'
         : '0 8px 26px rgba(4,30,37,0.09)';
-      pill.style.background = scrolled
-        ? 'rgba(255,255,255,0.97)'
-        : 'rgba(255,255,255,0.94)';
+      // Don't override solid white when mobile menu is open
+      if (!menuOpenRef.current) {
+        pill.style.background = scrolled
+          ? 'rgba(255,255,255,0.97)'
+          : 'rgba(255,255,255,0.94)';
+      }
     };
 
     window.addEventListener('scroll', onScroll, { passive: true });
@@ -68,6 +72,7 @@ export function Navbar() {
       document.documentElement.style.overflow = 'hidden';
       setMenuOpen(true);
       setClosing(false);
+      menuOpenRef.current = true;
     }
   }, [menuOpen]);
 
@@ -78,6 +83,7 @@ export function Navbar() {
       document.documentElement.style.overflow = '';
       setMenuOpen(false);
       setClosing(false);
+      menuOpenRef.current = false;
     }, 220);
   }, [menuOpen]);
 
@@ -104,9 +110,9 @@ export function Navbar() {
           className="pointer-events-auto mx-auto flex items-center border rounded-card"
           style={{
             maxWidth: '1520px',
-            background: 'rgba(255,255,255,0.94)',
-            backdropFilter: 'blur(18px) saturate(150%)',
-            WebkitBackdropFilter: 'blur(18px) saturate(150%)',
+            background: menuOpen ? 'rgba(255,255,255,1)' : 'rgba(255,255,255,0.94)',
+            backdropFilter: menuOpen ? 'none' : 'blur(18px) saturate(150%)',
+            WebkitBackdropFilter: menuOpen ? 'none' : 'blur(18px) saturate(150%)',
             borderColor: 'rgba(10,62,72,0.07)',
             padding: '10px 10px 10px 20px',
             gap: 'clamp(10px, 1.5vw, 26px)',

@@ -115,7 +115,74 @@ function extractStrings() {
     'Specification',
     'Built for',
     'the Long Run',
+    // ── Round 3: All remaining missing strings from full component audit ──
+    'Back to home',
+    'Browse products',
+    'Browse the product index',
+    'Cable Tray',
+    'Call the works',
+    'Checked at Every Stage,',
+    'Clear filters',
+    'Come and see the floor',
+    'Earthing &',
+    'Email the office directly',
+    'Enquire about this item',
+    'Enquiry form',
+    'Every Part of',
+    'Fields marked required are all we need to start. The more you tell us, the tighter the quotation.',
+    'From Sheet to Shipment',
+    'From Steel',
+    'Full Catalogue',
+    'Get a real date.',
+    'Have a bill of quantities ready?',
+    'Industries Manufactures',
+    'Industries We Supply',
+    'LinkedIn',
+    'Modern Solutions for Industrial Cable Management',
+    'Not Just at the Gate',
+    'Nothing matches that yet',
+    'Open in Google Maps',
+    'Open in Maps',
+    'Open the enquiry form',
+    'Pratiksha',
+    'Precision in fabrication. Control at every stage. Delivery you can plan around.',
+    'Ready to spec your run?',
+    'Request a plant visit',
+    'Request a quotation',
+    'Routing, earthing and instrumentation systems for industrial plants.',
+    'See Specifications',
+    'Select a family',
+    'Send a Drawing Today, Track It to Dispatch',
+    'Send an enquiry',
+    'Send the drawing.',
+    'Send us the section.',
+    'Skip to the enquiry form',
+    'Skip to the product index',
+    'Start an enquiry',
+    'Start with the product index.',
+    'Supplied and installed across plants, warehouses and infrastructure projects throughout Maharashtra.',
+    'Systems',
+    'Tell us what the run needs and we will come back with sizes, finish options and a delivery date \u2014 typically within two working days.',
+    'The machines behind',
+    'Thirteen years,',
+    'Useful Links',
+    'We make the',
+    'We will hold the tolerance.',
+    'Website',
+    'What Pratiksha',
+    'What speeds up a quotation',
+    'Your enquiry is with the works. We reply with sizes, finish options and a delivery date \u2014 typically within two working days.',
+    'We reply within two working days. By sending this you agree to us contacting you about this enquiry.',
+    'to Structure',
+    'to Dispatch',
+    'WHAT DO YOU NEED?',
+    'WHAT IS THIS ABOUT?',
+    'DRAG OR SCROLL THE RAIL',
+    'NEXT',
+    'privacy note',
+    'one floor, one team.',
   ];
+
 
 
   for (const s of uiStrings) strings.add(s);
@@ -162,8 +229,8 @@ async function translateBatch(texts, lang) {
 
     done++;
     if (done % 20 === 0) console.log(`    ${done}/${texts.length}`);
-    // 500ms between requests to avoid rate limiting
-    await sleep(500);
+    // 2s between requests to avoid rate limiting
+    await sleep(2000);
   }
 
   return results;

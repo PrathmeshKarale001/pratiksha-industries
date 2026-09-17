@@ -71,9 +71,9 @@ async function loadDictionary(lang: LangCode): Promise<Dictionary> {
   }
 }
 
-function translateTextNode(node: Text, dict: Dictionary): void {
+function translateTextNode(node: Text, dict: Dictionary): boolean {
   const original = originalTextMap.get(node) ?? node.nodeValue ?? '';
-  if (!original.trim()) return;
+  if (!original.trim()) return false;
 
   // Save original if not already saved
   if (!originalTextMap.has(node)) {
@@ -82,14 +82,22 @@ function translateTextNode(node: Text, dict: Dictionary): void {
 
   // Look up the trimmed text in dictionary
   const trimmed = original.trim();
-  const translated = dict[trimmed];
+  let translated = dict[trimmed];
+
+  // If not found, try normalizing whitespace (multi-line JSX text with \n)
+  if (!translated) {
+    const normalized = trimmed.replace(/\s+/g, ' ');
+    translated = dict[normalized];
+  }
 
   if (translated && translated !== trimmed) {
     // Preserve leading/trailing whitespace from original
     const leadingSpace = original.match(/^\s*/)?.[0] ?? '';
     const trailingSpace = original.match(/\s*$/)?.[0] ?? '';
     node.nodeValue = leadingSpace + translated + trailingSpace;
+    return true;
   }
+  return false;
 }
 
 function restoreTextNode(node: Text): void {
@@ -128,8 +136,7 @@ function translateElement(el: Element, dict: Dictionary): boolean {
   const rawText = el.textContent?.trim();
   if (!rawText) return false;
 
-  // Normalize whitespace: <br> tags eat spaces, so "Engineered to\nSpecification"
-  // becomes "Engineered toSpecification". Normalize to match dictionary keys.
+  // Normalize whitespace: <br> tags eat spaces, newlines from JSX formatting
   const text = rawText.replace(/\s+/g, ' ');
   const translated = dict[text];
   if (translated && translated !== text) {
@@ -159,18 +166,22 @@ function translateDOM(dict: Dictionary): void {
   const untranslatedParents = new Set<Element>();
 
   for (const node of nodes) {
-    const trimmed = (node.nodeValue ?? '').trim();
-    if (dict[trimmed]) {
-      translateTextNode(node, dict);
-    } else if (node.parentElement) {
+    if (!translateTextNode(node, dict) && node.parentElement) {
       // This text node didn't match — queue its parent for element-level matching
       untranslatedParents.add(node.parentElement);
     }
   }
 
   // Phase 2: Try element-level matching for parents of unmatched text nodes
+  // Also try grandparent if parent doesn't match (handles nested spans)
   for (const parent of untranslatedParents) {
-    translateElement(parent, dict);
+    if (!translateElement(parent, dict)) {
+      // Try grandparent
+      const gp = parent.parentElement;
+      if (gp && !gp.closest('[data-langswitcher]')) {
+        translateElement(gp, dict);
+      }
+    }
   }
 
   // Also translate placeholder attributes on inputs
