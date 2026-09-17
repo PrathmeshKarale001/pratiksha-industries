@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { EnquiryForm } from './EnquiryForm';
+import EnquiryForm from './EnquiryForm';
 
 interface EnquiryModalProps {
   isOpen: boolean;
