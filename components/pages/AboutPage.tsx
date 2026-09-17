@@ -10,6 +10,7 @@
 
 import React, { useRef, useState, useCallback, useEffect } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import Navbar from '@/components/Navbar';
 import SiteFooter from '@/components/SiteFooter';
 import MobileActionBar from '@/components/MobileActionBar';
@@ -93,6 +94,7 @@ export default function AboutPage() {
 
       <Navbar mode={mode} compact={compact} onQuote={openQuote} />
 
+      <main id="main">
       <div id="story" data-wrap="1" style={{ maxWidth: "1320px", margin: "0 auto", padding: "128px 32px 0" }}>
           <div data-storygrid="1" style={{ display: "grid", gridTemplateColumns: "minmax(0, 1fr) minmax(200px, 290px)", gap: "clamp(28px, 4vw, 56px)", alignItems: "end" }}>
             <div>
@@ -120,7 +122,9 @@ export default function AboutPage() {
           </div>
 
           <div data-reveal="1" data-reveal-delay="120" style={{ position: "relative", marginTop: "54px", borderRadius: "20px", overflow: "hidden", height: "clamp(280px, 34vw, 460px)", background: "#0A3E48" }}>
-            <img data-par="1" src="/assets/process.png" alt="Fabrication floor at Khed Shivapur" style={{ position: "absolute", top: "-8%", left: "0", width: "100%", height: "116%", objectFit: "cover", willChange: "transform" }} />
+            <div data-par="1" style={{ position: "absolute", top: "-8%", left: "0", width: "100%", height: "116%" }}>
+              <Image src="/images/process.png" alt="Fabrication floor at Khed Shivapur" fill sizes="(max-width: 900px) 100vw, 50vw" quality={78} style={{ objectFit: "cover", willChange: "transform" }} />
+            </div>
             <div style={{ position: "absolute", inset: "0", background: "linear-gradient(90deg, rgba(4,30,37,0.72), rgba(4,30,37,0.08) 62%)" }}></div>
             <div style={{ position: "absolute", left: "34px", bottom: "30px", right: "34px", display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: "24px", flexWrap: "wrap" }}>
               <div style={{ fontFamily: "'IBM Plex Mono', monospace", fontSize: "12px", letterSpacing: "0.12em", color: "rgba(255,255,255,0.82)" }}>SHED NO. 01, KHEDEKAR INDUSTRIAL ESTATE / KHED SHIVAPUR, PUNE</div>
@@ -137,8 +141,8 @@ export default function AboutPage() {
         <div data-wrap="1" style={{ maxWidth: "1320px", margin: "0 auto", padding: "96px 32px 0" }}>
           <div data-foundergrid="1" style={{ display: "grid", gridTemplateColumns: "minmax(240px, 340px) minmax(0, 1fr)", gap: "clamp(32px, 4vw, 64px)", alignItems: "start" }}>
             <div data-reveal="1">
-              <div data-founderimg="1" style={{ borderRadius: "20px", overflow: "hidden", background: "#EFEDE6", aspectRatio: "0.82" }}>
-                <img src="/assets/founder.jpg" alt="Mr. Pradeep Hatte — Founder & Proprietor, Pratiksha Industries" style={{ width: '100%', height: '100%', objectFit: 'cover', objectPosition: 'center 15%', display: 'block' }} />
+              <div data-founderimg="1" style={{ position: "relative", borderRadius: "20px", overflow: "hidden", background: "#EFEDE6", aspectRatio: "0.82" }}>
+                <Image src="/images/founder.jpg" alt="Mr. Pradeep Hatte — Founder & Proprietor, Pratiksha Industries" fill sizes="(max-width: 860px) 340px, 290px" quality={78} style={{ objectFit: 'cover', objectPosition: 'center 15%' }} />
               </div>
               <div style={{ marginTop: "18px", display: "flex", alignItems: "baseline", justifyContent: "space-between", gap: "16px" }}>
                 <div>
@@ -269,7 +273,9 @@ export default function AboutPage() {
             </div>
 
             <div data-reveal="1" data-reveal-delay="100" style={{ position: "relative", borderRadius: "22px", overflow: "hidden", background: "#0A3E48", minHeight: "420px" }}>
-              <img data-par="1" src="/assets/factory-dusk.png" alt="Pratiksha Industries facility" style={{ position: "absolute", top: "-8%", left: "0", width: "100%", height: "116%", objectFit: "cover", willChange: "transform" }} />
+              <div data-par="1" style={{ position: "absolute", top: "-8%", left: "0", width: "100%", height: "116%" }}>
+                <Image src="/images/factory-dusk.png" alt="Pratiksha Industries facility" fill sizes="(max-width: 900px) 100vw, 50vw" quality={72} style={{ objectFit: "cover", willChange: "transform" }} />
+              </div>
               <div style={{ position: "absolute", inset: "0", background: "linear-gradient(180deg, rgba(4,30,37,0.28), rgba(4,30,37,0.9))" }}></div>
               <div style={{ position: "relative", height: "100%", display: "flex", flexDirection: "column", justifyContent: "flex-end", gap: "18px", padding: "40px 40px 36px" }}>
                 <div style={{ fontSize: "clamp(26px, 2.8vw, 38px)", lineHeight: "1.06", fontWeight: "700", letterSpacing: "-0.035em", color: "#FFFFFF" }}>Come and see the floor</div>
@@ -292,6 +298,8 @@ export default function AboutPage() {
             </div>
           </div>
         </div>
+
+      </main>
 
       <SiteFooter onQuote={openQuote} />
       <MobileActionBar onQuote={openQuote} />

@@ -13,13 +13,13 @@ export const metadata: Metadata = {
     description:
       'Cable trays, fittings, supports, earthing and instrumentation — drawn to your widths, gauges and finishes. 20+ catalogue items with full specifications.',
     url: `${site.url}/products`,
-    images: [{ url: '/assets/og-image.jpg', width: 1408, height: 768, alt: 'Pratiksha Industries Product Index' }]
+    images: [{ url: '/images/og-image.jpg', width: 1408, height: 768, alt: 'Pratiksha Industries Product Index' }]
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Product Index — Pratiksha Industries',
     description: 'Cable trays, fittings, earthing & instrumentation — 20+ items, widths 50–1000 mm, seven finishes.',
-    images: [{ url: '/assets/og-image.jpg', alt: 'Pratiksha Industries Products' }]
+    images: [{ url: '/images/og-image.jpg', alt: 'Pratiksha Industries Products' }]
   }
 };
 

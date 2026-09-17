@@ -65,13 +65,13 @@ export const metadata: Metadata = {
   /* ── Favicons ────────────────────────────────────────────────────────── */
   icons: {
     icon: [
-      { url: '/assets/favicon-32.png', sizes: '32x32', type: 'image/png' },
-      { url: '/assets/favicon-16.png', sizes: '16x16', type: 'image/png' }
+      { url: '/images/favicon-32.png', sizes: '32x32', type: 'image/png' },
+      { url: '/images/favicon-16.png', sizes: '16x16', type: 'image/png' }
     ],
-    apple: { url: '/assets/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    apple: { url: '/images/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
     other: [
-      { rel: 'icon', url: '/assets/icon-192.png', sizes: '192x192', type: 'image/png' },
-      { rel: 'icon', url: '/assets/icon-512.png', sizes: '512x512', type: 'image/png' }
+      { rel: 'icon', url: '/images/icon-192.png', sizes: '192x192', type: 'image/png' },
+      { rel: 'icon', url: '/images/icon-512.png', sizes: '512x512', type: 'image/png' }
     ]
   },
 
@@ -86,7 +86,7 @@ export const metadata: Metadata = {
       'ISO 9001:2015 certified cable tray manufacturer in Pune. Cable trays, earthing, instrumentation — made to drawing, inspected at every stage.',
     images: [
       {
-        url: '/assets/og-image.jpg',
+        url: '/images/og-image.jpg',
         width: 1408,
         height: 768,
         alt: 'Pratiksha Industries — Cable Trays, Earthing & Instrumentation',
@@ -103,7 +103,7 @@ export const metadata: Metadata = {
       'Cable tray systems, earthing products & instrumentation manifolds — ISO 9001:2015 certified, fabricated at Khed Shivapur, Pune.',
     images: [
       {
-        url: '/assets/og-image.jpg',
+        url: '/images/og-image.jpg',
         alt: 'Pratiksha Industries — Cable Trays, Earthing & Instrumentation'
       }
     ]
@@ -147,10 +147,10 @@ const organizationJsonLd = {
   '@id': `${site.url}/#organization`,
   name: site.name,
   url: site.url,
-  image: `${site.url}/assets/og-image.jpg`,
+  image: `${site.url}/images/og-image.jpg`,
   logo: {
     '@type': 'ImageObject',
-    url: `${site.url}/assets/icon-512.png`,
+    url: `${site.url}/images/icon-512.png`,
     width: 512,
     height: 512
   },

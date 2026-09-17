@@ -152,7 +152,7 @@ export default function HomePage() {
           <div style={{ position: "relative", width: "118px", height: "118px", display: "flex", alignItems: "center", justifyContent: "center" }}>
             <div style={{ position: "absolute", inset: "0", borderRadius: "50%", border: "1px dashed rgba(240,222,156,0.4)", animation: "pi-spin 9s linear infinite" }}></div>
             <div style={{ position: "absolute", inset: "14px", borderRadius: "50%", border: "1px solid rgba(255,255,255,0.14)", animation: "pi-spin-rev 14s linear infinite" }}></div>
-            <img src="/assets/logo.jpg" alt="Pratiksha Industries" style={{ width: "62px", height: "62px", borderRadius: "50%", objectFit: "cover", display: "block" }} />
+            <Image src="/images/logo.jpg" alt="Pratiksha Industries" width={62} height={62} priority style={{ borderRadius: "50%", objectFit: "cover", display: "block" }} />
           </div>
           <div style={{ textAlign: "center" }}>
             <div style={{ fontSize: "17px", fontWeight: "800", letterSpacing: "-0.01em", color: "#FFFFFF" }}>Pratiksha Industries</div>
@@ -173,7 +173,7 @@ export default function HomePage() {
               <Image
                 ref={heroImgRef}
                 data-hero-img="1"
-                src="/assets/hero.png"
+                src="/images/hero.png"
                 alt="Cable tray installation"
                 width={1376}
                 height={768}
@@ -338,7 +338,7 @@ export default function HomePage() {
           <div style={{ position: "relative", background: "#0A3E48", minHeight: "620px", overflow: "hidden" }}>
             <Image
               data-hero-img="1"
-              src="/assets/process.png"
+              src="/images/process.png"
               alt="Press brake fabrication"
               width={896}
               height={1200}

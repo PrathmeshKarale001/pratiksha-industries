@@ -34,7 +34,7 @@ export default function SiteFooter({ onQuote }: { onQuote?: () => void }) {
       style={{ position: 'relative', padding: '96px 0 0', background: '#0A3E48', overflow: 'hidden' }}
     >
       <Image
-        src="/assets/factory-dusk.png"
+        src="/images/factory-dusk.png"
         alt=""
         aria-hidden="true"
         fill

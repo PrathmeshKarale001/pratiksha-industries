@@ -12,13 +12,13 @@ export const metadata: Metadata = {
     description:
       'Cable tray systems, tray fittings, earthing products and instrumentation manifolds, fabricated at Khed Shivapur, Pune. ISO 9001:2015 certified.',
     url: site.url,
-    images: [{ url: '/assets/og-image.jpg', width: 1408, height: 768, alt: 'Pratiksha Industries — Delivering Quality' }]
+    images: [{ url: '/images/og-image.jpg', width: 1408, height: 768, alt: 'Pratiksha Industries — Delivering Quality' }]
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Pratiksha Industries — Delivering Quality',
     description: 'Cable trays, earthing & instrumentation — ISO 9001:2015 certified, Khed Shivapur, Pune.',
-    images: [{ url: '/assets/og-image.jpg', alt: 'Pratiksha Industries' }]
+    images: [{ url: '/images/og-image.jpg', alt: 'Pratiksha Industries' }]
   }
 };
 

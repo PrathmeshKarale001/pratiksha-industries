@@ -6,6 +6,7 @@
  */
 
 import React, { useRef, useEffect } from 'react';
+import Image from 'next/image';
 import Navbar from '@/components/Navbar';
 import SiteFooter from '@/components/SiteFooter';
 import MobileActionBar from '@/components/MobileActionBar';
@@ -41,9 +42,10 @@ export default function ContactPage() {
 
       <div ref={progressRef} data-progress="1" style={{ position: "fixed", top: "0", left: "0", height: "3px", width: "0%", background: "#F0DE9C", zIndex: "150", transition: "width 90ms linear" }}></div>
 
-        <div id="main" data-heropad="1" style={{ padding: "14px" }}>
+        <main id="main">
+        <div data-heropad="1" style={{ padding: "14px" }}>
           <div ref={heroRef} data-glassref="1" style={{ position: "relative", overflow: "hidden", borderRadius: "22px", background: "#0A3E48", display: "flex", flexDirection: "column" }}>
-            <img loading="lazy" decoding="async" src="/assets/factory-dusk.png" alt="Pratiksha Industries facility" style={{ position: "absolute", inset: "0", width: "100%", height: "100%", objectFit: "cover", opacity: "0.5" }} />
+            <Image src="/images/factory-dusk.png" alt="Pratiksha Industries facility" fill sizes="100vw" quality={72} style={{ objectFit: "cover", opacity: 0.5 }} />
             <div style={{ position: "absolute", inset: "0", background: "linear-gradient(178deg, rgba(4,30,37,0.8) 0%, rgba(4,30,37,0.5) 45%, rgba(4,26,32,0.9) 100%)" }}></div>
             <div style={{ position: "absolute", left: "50%", top: "-180px", width: "1240px", height: "1240px", marginLeft: "-620px", border: "1px dashed rgba(240,222,156,0.16)", borderRadius: "50%", pointerEvents: "none", animation: "pi-spin 70s linear infinite" }}></div>
 
@@ -168,6 +170,7 @@ export default function ContactPage() {
             </div>
           </div>
         </div>
+        </main>
 
       <SiteFooter />
       <MobileActionBar />

@@ -85,7 +85,7 @@ export default function Navbar({ mode, compact, onQuote }: Props) {
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/assets/logo.jpg"
+              src="/images/logo.jpg"
               alt="Pratiksha Industries"
               width={38}
               height={38}

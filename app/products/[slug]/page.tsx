@@ -19,7 +19,7 @@ export async function generateMetadata({
   const product = productBySlug(slug);
   if (!product) return {};
 
-  const imgUrl = product.img.replace(/^assets\//, '/assets/');
+  const imgUrl = asset(product.img);
 
   return {
     title: `${product.name} — ${CATS[product.cat].name}`,

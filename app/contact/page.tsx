@@ -12,13 +12,13 @@ export const metadata: Metadata = {
     description:
       'Share your GA drawing or BOQ. We reply with sizes, finish options and a delivery date within two working days. Khed Shivapur, Pune.',
     url: `${site.url}/contact`,
-    images: [{ url: '/assets/og-image.jpg', width: 1408, height: 768, alt: 'Contact Pratiksha Industries' }]
+    images: [{ url: '/images/og-image.jpg', width: 1408, height: 768, alt: 'Contact Pratiksha Industries' }]
   },
   twitter: {
     card: 'summary_large_image',
     title: 'Contact Pratiksha Industries',
     description: 'Send the drawing. Get a real date. Cable trays, earthing & instrumentation, Pune. +91 98508 45054.',
-    images: [{ url: '/assets/og-image.jpg', alt: 'Contact Pratiksha Industries' }]
+    images: [{ url: '/images/og-image.jpg', alt: 'Contact Pratiksha Industries' }]
   }
 };
 
