@@ -8,10 +8,10 @@ export const stats = [
 ] as const;
 
 export const solutions = [
-  { no: "01", name: "Cable Trays", desc: "Perforated, ladder, raceway and wire mesh trays in every standard width and gauge.", img: "assets/prod-tray.png", delay: 0 },
-  { no: "02", name: "Earthing Systems", desc: "Strips, rods, plates and electrodes for reliable electrical safety and continuity.", img: "assets/prod-earthing.png", delay: 90 },
-  { no: "03", name: "Tray Accessories", desc: "Bends, tees, crosses, reducers, risers and couplers — every fitting a run needs.", img: "assets/prod-accessories.png", delay: 180 },
-  { no: "04", name: "Instrumentation", desc: "Precision manifolds, cable glands, bushings and unions for process and instrument lines.", img: "assets/prod-manifold.png", delay: 270 }
+  { no: "01", name: "Cable Trays", desc: "Perforated, ladder, raceway and wire mesh trays in every standard width and gauge.", img: "images/prod-tray.png", delay: 0 },
+  { no: "02", name: "Earthing Systems", desc: "Strips, rods, plates and electrodes for reliable electrical safety and continuity.", img: "images/prod-earthing.png", delay: 90 },
+  { no: "03", name: "Tray Accessories", desc: "Bends, tees, crosses, reducers, risers and couplers — every fitting a run needs.", img: "images/prod-accessories.png", delay: 180 },
+  { no: "04", name: "Instrumentation", desc: "Precision manifolds, cable glands, bushings and unions for process and instrument lines.", img: "images/prod-manifold.png", delay: 270 }
 ] as const;
 
 export const marks = [
@@ -23,9 +23,9 @@ export const marks = [
 ] as const;
 
 export const projects = [
-  { name: "Plant Cable Routing", tagA: "TRAY", tagB: "INSTALL", img: "assets/proj-plant.png", delay: 0 },
-  { name: "Warehouse Distribution", tagA: "MESH", tagB: "SUPPLY", img: "assets/proj-warehouse.png", delay: 110 },
-  { name: "Substation Earthing", tagA: "EARTHING", tagB: "SITE", img: "assets/proj-substation.png", delay: 220 }
+  { name: "Plant Cable Routing", tagA: "TRAY", tagB: "INSTALL", img: "images/proj-plant.png", delay: 0 },
+  { name: "Warehouse Distribution", tagA: "MESH", tagB: "SUPPLY", img: "images/proj-warehouse.png", delay: 110 },
+  { name: "Substation Earthing", tagA: "EARTHING", tagB: "SITE", img: "images/proj-substation.png", delay: 220 }
 ] as const;
 
 export const inspection = [
@@ -92,12 +92,12 @@ export const familiesRaw = [
 ] as const;
 
 export const marqueeRaw = [
-  { label: "Perforated Trays", img: "assets/prod-tray.png" },
-  { label: "Ladder Trays", img: "assets/proj-plant.png" },
-  { label: "Wire Mesh Trays", img: "assets/proj-warehouse.png" },
-  { label: "Earthing Strips", img: "assets/prod-earthing.png" },
-  { label: "Cable Glands", img: "assets/prod-accessories.png" },
-  { label: "Manifolds", img: "assets/prod-manifold.png" },
-  { label: "Junction Boxes", img: "assets/process.png" },
-  { label: "Bends & Risers", img: "assets/proj-substation.png" }
+  { label: "Perforated Trays", img: "images/prod-tray.png" },
+  { label: "Ladder Trays", img: "images/proj-plant.png" },
+  { label: "Wire Mesh Trays", img: "images/proj-warehouse.png" },
+  { label: "Earthing Strips", img: "images/prod-earthing.png" },
+  { label: "Cable Glands", img: "images/prod-accessories.png" },
+  { label: "Manifolds", img: "images/prod-manifold.png" },
+  { label: "Junction Boxes", img: "images/process.png" },
+  { label: "Bends & Risers", img: "images/proj-substation.png" }
 ] as const;
